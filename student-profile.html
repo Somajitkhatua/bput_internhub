@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Student Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="student-profile.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo">BPUT InternHub</div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showView('profile')" id="profileNav" class="active">Profile</a></li>
+                <li><a href="#" onclick="showView('dashboard')" id="dashboardNav">Dashboard</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#achievements">Achievements</a></li>
+                <li><a href="#projects">Projects</a></li>
+            </ul>
+        </nav>
+        <div class="search-container">
+            <input type="text" class="search-bar" id="searchBar" placeholder="Search...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        <div class="user-menu">
+            <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+            <button class="notification-btn" id="notificationBtn">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </button>
+            <button class="profile-btn" id="editProfileBtn">Edit Profile</button>
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+        <!-- Dashboard View -->
+        <div class="dashboard-container hidden" id="dashboardView">
+            <div class="container">
+                <div class="dashboard-header">
+                    <div>
+                        <h1 class="dashboard-title">Welcome back, Somajit! 👋</h1>
+                        <p class="dashboard-subtitle">Here's what's happening with your academic journey today.</p>
+                    </div>
+                    <div class="dashboard-actions">
+                        <button class="dashboard-btn secondary" onclick="showView('profile')">
+                            <i class="fas fa-user"></i> View Profile
+                        </button>
+                        <button class="dashboard-btn" onclick="showNotification('Explore courses feature coming soon!')">
+                            <i class="fas fa-book"></i> Explore Courses
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- Stats Card -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-line"></i>
+                                Performance Overview
+                            </h3>
+                            <button class="card-action" onclick="showNotification('Detailed analytics coming soon!')">View Details</button>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon primary">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="stat-value">3.85</div>
+                                <div class="stat-label">GPA</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> 12%
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon success">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <div class="stat-value">24</div>
+                                <div class="stat-label">Projects</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> 8%
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon warning">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="stat-value">12</div>
+                                <div class="stat-label">Achievements</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> 15%
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon danger">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-value">156</div>
+                                <div class="stat-label">Study Hours</div>
+                                <div class="stat-change negative">
+                                    <i class="fas fa-arrow-down"></i> 5%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Chart -->
+                    <div class="dashboard-card full-width">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-bar"></i>
+                                Performance Overview
+                            </h3>
+                            <div class="chart-options">
+                                <button class="chart-option active" onclick="updateChart('week')">Week</button>
+                                <button class="chart-option" onclick="updateChart('month')">Month</button>
+                                <button class="chart-option" onclick="updateChart('year')">Year</button>
+                            </div>
+                        </div>
+                        <div class="chart-container" id="performanceChart">
+                            <div class="chart-bar" style="height: 60%">
+                                <span class="chart-bar-value">85</span>
+                                <span class="chart-bar-label">Mon</span>
+                            </div>
+                            <div class="chart-bar" style="height: 75%">
+                                <span class="chart-bar-value">92</span>
+                                <span class="chart-bar-label">Tue</span>
+                            </div>
+                            <div class="chart-bar" style="height: 85%">
+                                <span class="chart-bar-value">88</span>
+                                <span class="chart-bar-label">Wed</span>
+                            </div>
+                            <div class="chart-bar" style="height: 70%">
+                                <span class="chart-bar-value">78</span>
+                                <span class="chart-bar-label">Thu</span>
+                            </div>
+                            <div class="chart-bar" style="height: 90%">
+                                <span class="chart-bar-value">95</span>
+                                <span class="chart-bar-label">Fri</span>
+                            </div>
+                            <div class="chart-bar" style="height: 65%">
+                                <span class="chart-bar-value">72</span>
+                                <span class="chart-bar-label">Sat</span>
+                            </div>
+                            <div class="chart-bar" style="height: 80%">
+                                <span class="chart-bar-value">86</span>
+                                <span class="chart-bar-label">Sun</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-history"></i>
+                                Recent Activity
+                            </h3>
+                            <button class="card-action" onclick="showView('profile')">View All</button>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background-color: rgba(76, 175, 80, 0.2); color: var(--success-color);">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Completed Advanced Machine Learning Course</div>
+                                    <div class="activity-time">2 hours ago</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background-color: rgba(106, 90, 205, 0.2); color: var(--primary-color);">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Earned new achievement: Hackathon Winner</div>
+                                    <div class="activity-time">5 hours ago</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background-color: rgba(255, 152, 0, 0.2); color: var(--warning-color);">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Submitted project: AI-Powered Study Assistant</div>
+                                    <div class="activity-time">1 day ago</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background-color: rgba(244, 67, 54, 0.2); color: var(--danger-color);">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Joined new study group: Data Science Masters</div>
+                                    <div class="activity-time">2 days ago</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile View -->
+        <div class="profile-container active" id="profileView">
+            <div class="container">
+                <!-- Left Sidebar -->
+                <aside class="left-sidebar">
+                    <!-- Profile Card -->
+                    <div class="profile-card">
+                        <div class="profile-avatar" id="avatarUpload">
+                            <img src="https://picsum.photos/seed/studentprofile/300/300.jpg" alt="Profile Picture" id="profileImage">
+                            <div class="status-indicator"></div>
+                        </div>
+                        <h2 class="profile-name" id="profileName">Somajit Khatua</h2>
+                        <p class="profile-title" id="profileTitle">Computer Science Student</p>
+                        <p class="profile-bio" id="profileBio">Passionate about AI and machine learning. Currently working on innovative solutions for real-world problems.</p>
+                        
+                        <div class="social-links">
+                            <a href="#" onclick="openSocialLink('github')"><i class="fab fa-github"></i></a>
+                            <a href="#" onclick="openSocialLink('linkedin')"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" onclick="openSocialLink('twitter')"><i class="fab fa-twitter"></i></a>
+                            <a href="#" onclick="openSocialLink('instagram')"><i class="fab fa-instagram"></i></a>
+                        </div>
+                        
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span id="profileEmail">khatusomajit@gmail.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span id="profilePhone">+1 (555) 123-4567</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span id="profileLocation">San Francisco, CA</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Joined September 2020</span>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="shareProfile()">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                            <button class="action-btn" onclick="downloadProfile()">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats Card -->
+                    <div class="stats-card">
+                        <h3 class="stats-title">
+                            <i class="fas fa-chart-line"></i>
+                            Performance Stats
+                        </h3>
+                        <div class="stat-item">
+                            <span class="stat-label">Overall GPA</span>
+                            <span class="stat-value">3.85/4.0</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 96.25%"></div>
+                        </div>
+                        
+                        <div class="stat-item" style="margin-top: 1.5rem;">
+                            <span class="stat-label">Contest Ranking</span>
+                            <span class="stat-value">95.85, 1524</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 95.85%"></div>
+                        </div>
+                        
+                        <div class="stat-item" style="margin-top: 1.5rem;">
+                            <span class="stat-label">Projects Completed</span>
+                            <span class="stat-value">24</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 80%"></div>
+                        </div>
+                        
+                        <div class="stat-item" style="margin-top: 1.5rem;">
+                            <span class="stat-label">Certificates Earned</span>
+                            <span class="stat-value">12</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+                </aside>
+                
+                <!-- Main Content -->
+                <main class="main-content">
+                    <!-- Resume Status Section -->
+                    <section id="resume" class="content-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-file-alt"></i>
+                                Resume Status
+                            </h2>
+                            <div class="card-actions">
+                                <button class="add-btn" onclick="openModal('resumeModal')">
+                                    <i class="fas fa-file-upload"></i> Update Resume
+                                </button>
+                                <button class="view-all-btn" onclick="viewResume()">
+                                    <i class="fas fa-eye"></i> View Resume
+                                </button>
+                            </div>
+                        </div>
+                        <div class="resume-content">
+                            <div class="resume-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="resume-details">
+                                <div class="resume-name">Somajit_Khatua_Resume.pdf</div>
+                                <div class="resume-date">Last updated: 2 weeks ago</div>
+                                <span class="resume-status outdated">Needs Update</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Academic Performance Section -->
+                    <section id="academic-performance" class="content-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-graduation-cap"></i>
+                                Academic Performance
+                            </h2>
+                            <div class="card-actions">
+                                <button class="add-btn" onclick="saveAcademicPerformance()">
+                                    <i class="fas fa-save"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                        <form id="academicForm">
+                            <div class="academic-form">
+                                <div class="form-group">
+                                    <label class="form-label" for="degree">Degree Program</label>
+                                    <input type="text" class="form-input" id="degree" value="Bachelor of Computer Science">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="university">University</label>
+                                    <input type="text" class="form-input" id="university" value="Stanford University">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="startYear">Start Year</label>
+                                    <input type="number" class="form-input" id="startYear" value="2020" min="2000" max="2030">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="expectedGraduation">Expected Graduation</label>
+                                    <input type="number" class="form-input" id="expectedGraduation" value="2024" min="2000" max="2030">
+                                </div>
+                            </div>
+
+                            <h3 style="margin: 1.5rem 0 1rem; color: var(--text-primary);">Semester-wise Performance</h3>
+                            <div id="semestersContainer">
+                                <div class="semester-container">
+                                    <div class="semester-header">
+                                        <h4 class="semester-title">Semester 1</h4>
+                                        <button type="button" class="remove-semester-btn" onclick="removeSemester(this)">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="semester-fields">
+                                        <div class="form-group">
+                                            <label class="form-label">GPA</label>
+                                            <input type="number" class="form-input" step="0.01" min="0" max="4" value="3.75">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Attendance (%)</label>
+                                            <input type="number" class="form-input" min="0" max="100" value="95">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Credits Completed</label>
+                                            <input type="number" class="form-input" min="0" value="15">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="semester-container">
+                                    <div class="semester-header">
+                                        <h4 class="semester-title">Semester 2</h4>
+                                        <button type="button" class="remove-semester-btn" onclick="removeSemester(this)">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="semester-fields">
+                                        <div class="form-group">
+                                            <label class="form-label">GPA</label>
+                                            <input type="number" class="form-input" step="0.01" min="0" max="4" value="3.82">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Attendance (%)</label>
+                                            <input type="number" class="form-input" min="0" max="100" value="92">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Credits Completed</label>
+                                            <input type="number" class="form-input" min="0" value="16">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="add-semester-btn" onclick="addSemester()">
+                                <i class="fas fa-plus"></i> Add Semester
+                            </button>
+
+                            <h3 style="margin: 1.5rem 0 1rem; color: var(--text-primary);">Extra-curricular Activities</h3>
+                            <div class="form-group">
+                                <label class="form-label" for="activities">Activities & Achievements</label>
+                                <textarea class="form-textarea" id="activities" rows="4">President of Computer Science Club (2024-Present)
+Hackathon Winner - CodeFest 2024
+Teaching Assistant for Data Structures Course</textarea>
+                            </div>
+
+                            <h3 style="margin: 1.5rem 0 1rem; color: var(--text-primary);">Additional Information</h3>
+                            <div class="academic-form">
+                                <div class="form-group">
+                                    <label class="form-label" for="research">Research Experience</label>
+                                    <textarea class="form-textarea" id="research" rows="3">Research Assistant in AI Lab (Summer 2024)
+Published paper on "Optimizing Neural Networks for Edge Devices"</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="internships">Internships</label>
+                                    <textarea class="form-textarea" id="internships" rows="3">Software Engineering Intern at TechCorp (Summer 2024)
+Data Science Intern at DataSoft (Summer 2025)</textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    
+                    <!-- Skills Section -->
+                    <section id="skills" class="content-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-code"></i>
+                                Skills Flow
+                            </h2>
+                            <div class="card-actions">
+                                <button class="filter-btn" onclick="toggleFilter('skills')">
+                                    <i class="fas fa-filter"></i> Filter
+                                </button>
+                                <button class="add-btn" onclick="openAddModal('skill')">
+                                    <i class="fas fa-plus"></i> Add
+                                </button>
+                                <button class="export-btn" onclick="exportSection('skills')">
+                                    <i class="fas fa-file-export"></i> Export
+                                </button>
+                                <button class="view-all-btn" onclick="toggleExpanded('skills')">
+                                    <i class="fas fa-expand"></i> View All
+                                </button>
+                            </div>
+                        </div>
+                        <div class="filter-dropdown" id="skillsFilter">
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterAdvanced" checked>
+                                <label for="filterAdvanced">Advanced</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterIntermediate" checked>
+                                <label for="filterIntermediate">Intermediate</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterBeginner" checked>
+                                <label for="filterBeginner">Beginner</label>
+                            </div>
+                        </div>
+                        <div class="skills-container" id="skillsContainer">
+                            <div class="skill-item" data-level="Advanced">
+                                <button class="skill-delete" onclick="deleteSkill(this)">×</button>
+                                <div class="skill-icon"><i class="fab fa-python"></i></div>
+                                <div class="skill-name">Python</div>
+                                <div class="skill-level">Advanced</div>
+                            </div>
+                            <div class="skill-item" data-level="Advanced">
+                                <button class="skill-delete" onclick="deleteSkill(this)">×</button>
+                                <div class="skill-icon"><i class="fab fa-js"></i></div>
+                                <div class="skill-name">JavaScript</div>
+                                <div class="skill-level">Advanced</div>
+                            </div>
+                            <div class="skill-item" data-level="Intermediate">
+                                <button class="skill-delete" onclick="deleteSkill(this)">×</button>
+                                <div class="skill-icon"><i class="fab fa-react"></i></div>
+                                <div class="skill-name">React</div>
+                                <div class="skill-level">Intermediate</div>
+                            </div>
+                            <div class="skill-item" data-level="Advanced">
+                                <button class="skill-delete" onclick="deleteSkill(this)">×</button>
+                                <div class="skill-icon"><i class="fas fa-database"></i></div>
+                                <div class="skill-name">SQL</div>
+                                <div class="skill-level">Advanced</div>
+                            </div>
+                            <div class="skill-item" data-level="Intermediate">
+                                <button class="skill-delete" onclick="deleteSkill(this)">×</button>
+                                <div class="skill-icon"><i class="fab fa-aws"></i></div>
+                                <div class="skill-name">AWS</div>
+                                <div class="skill-level">Intermediate</div>
+                            </div>
+                            <div class="skill-item" data-level="Intermediate">
+                                <button class="skill-delete" onclick="deleteSkill(this)">×</button>
+                                <div class="skill-icon"><i class="fas fa-brain"></i></div>
+                                <div class="skill-name">Machine Learning</div>
+                                <div class="skill-level">Intermediate</div>
+                            </div>
+                        </div>
+                        <div class="expanded-content" id="skillsExpanded">
+                            <div class="skills-container">
+                                <div class="skill-item" data-level="Beginner">
+                                    <button class="skill-delete" onclick="deleteSkill(this)">×</button>
+                                    <div class="skill-icon"><i class="fab fa-docker"></i></div>
+                                    <div class="skill-name">Docker</div>
+                                    <div class="skill-level">Beginner</div>
+                                </div>
+                                <div class="skill-item" data-level="Beginner">
+                                    <button class="skill-delete" onclick="deleteSkill(this)">×</button>
+                                    <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
+                                    <div class="skill-name">Git</div>
+                                    <div class="skill-level">Beginner</div>
+                                </div>
+                                <div class="skill-item" data-level="Intermediate">
+                                    <button class="skill-delete" onclick="deleteSkill(this)">×</button>
+                                    <div class="skill-icon"><i class="fab fa-node-js"></i></div>
+                                    <div class="skill-name">Node.js</div>
+                                    <div class="skill-level">Intermediate</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="load-more" id="skillsLoadMore" style="display: none;">
+                            <button class="load-more-btn" onclick="loadMore('skills')">Load More</button>
+                        </div>
+                    </section>
+                    
+                    <!-- Achievements Section -->
+                    <section id="achievements" class="content-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-trophy"></i>
+                                Achievements
+                            </h2>
+                            <div class="card-actions">
+                                <button class="filter-btn" onclick="toggleFilter('achievements')">
+                                    <i class="fas fa-filter"></i> Filter
+                                </button>
+                                <button class="add-btn" onclick="openAddModal('achievement')">
+                                    <i class="fas fa-plus"></i> Add
+                                </button>
+                                <button class="export-btn" onclick="exportSection('achievements')">
+                                    <i class="fas fa-file-export"></i> Export
+                                </button>
+                                <button class="view-all-btn" onclick="toggleExpanded('achievements')">
+                                    <i class="fas fa-expand"></i> View All
+                                </button>
+                            </div>
+                        </div>
+                        <div class="filter-dropdown" id="achievementsFilter">
+                            <div class="filter-option">
+                                <input type="checkbox" id="filter2023" checked>
+                                <label for="filter2023">2023</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filter2022" checked>
+                                <label for="filter2022">2022</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filter2021" checked>
+                                <label for="filter2021">2021</label>
+                            </div>
+                        </div>
+                        <div class="achievements-grid" id="achievementsContainer">
+                            <div class="achievement-card" data-year="2023">
+                                <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                                <div class="achievement-title">Hackathon Winner</div>
+                                <div class="achievement-date">October 2023</div>
+                            </div>
+                            <div class="achievement-card" data-year="2023">
+                                <div class="achievement-icon"><i class="fas fa-certificate"></i></div>
+                                <div class="achievement-title">AWS Certified</div>
+                                <div class="achievement-date">August 2023</div>
+                            </div>
+                            <div class="achievement-card" data-year="2023">
+                                <div class="achievement-icon"><i class="fas fa-star"></i></div>
+                                <div class="achievement-title">Dean's List</div>
+                                <div class="achievement-date">Spring 2023</div>
+                            </div>
+                            <div class="achievement-card" data-year="2023">
+                                <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                                <div class="achievement-title">Research Publication</div>
+                                <div class="achievement-date">June 2023</div>
+                            </div>
+                            <div class="achievement-card" data-year="2023">
+                                <div class="achievement-icon"><i class="fas fa-graduation-cap"></i></div>
+                                <div class="achievement-title">Academic Excellence</div>
+                                <div class="achievement-date">May 2023</div>
+                            </div>
+                            <div class="achievement-card" data-year="2023">
+                                <div class="achievement-icon"><i class="fas fa-users"></i></div>
+                                <div class="achievement-title">Team Leadership</div>
+                                <div class="achievement-date">April 2023</div>
+                            </div>
+                        </div>
+                        <div class="expanded-content" id="achievementsExpanded">
+                            <div class="achievements-grid">
+                                <div class="achievement-card" data-year="2022">
+                                    <div class="achievement-icon"><i class="fas fa-code"></i></div>
+                                    <div class="achievement-title">Coding Champion</div>
+                                    <div class="achievement-date">December 2022</div>
+                                </div>
+                                <div class="achievement-card" data-year="2022">
+                                    <div class="achievement-icon"><i class="fas fa-book"></i></div>
+                                    <div class="achievement-title">Best Paper Award</div>
+                                    <div class="achievement-date">November 2022</div>
+                                </div>
+                                <div class="achievement-card" data-year="2022">
+                                    <div class="achievement-icon"><i class="fas fa-rocket"></i></div>
+                                    <div class="achievement-title">Innovation Prize</div>
+                                    <div class="achievement-date">October 2022</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Projects Section -->
+                    <section id="projects" class="content-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-project-diagram"></i>
+                                Recent Projects
+                            </h2>
+                            <div class="card-actions">
+                                <button class="filter-btn" onclick="toggleFilter('projects')">
+                                    <i class="fas fa-filter"></i> Filter
+                                </button>
+                                <button class="add-btn" onclick="openAddModal('project')">
+                                    <i class="fas fa-plus"></i> Add
+                                </button>
+                                <button class="export-btn" onclick="exportSection('projects')">
+                                    <i class="fas fa-file-export"></i> Export
+                                </button>
+                                <button class="view-all-btn" onclick="toggleExpanded('projects')">
+                                    <i class="fas fa-expand"></i> View All
+                                </button>
+                            </div>
+                        </div>
+                        <div class="filter-dropdown" id="projectsFilter">
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterWeb" checked>
+                                <label for="filterWeb">Web Development</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterAI" checked>
+                                <label for="filterAI">AI/ML</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterMobile" checked>
+                                <label for="filterMobile">Mobile</label>
+                            </div>
+                        </div>
+                        <div class="projects-container" id="projectsContainer">
+                            <div class="project-card" data-category="AI/ML">
+                                <div class="project-thumbnail">
+                                    <img src="https://picsum.photos/seed/project1/200/200.jpg" alt="Project Thumbnail">
+                                </div>
+                                <div class="project-details">
+                                    <h3 class="project-title">AI-Powered Study Assistant</h3>
+                                    <p class="project-description">Developed a machine learning application that helps students optimize their study schedules based on learning patterns and performance metrics.</p>
+                                    <div class="project-tags">
+                                        <span class="project-tag">Python</span>
+                                        <span class="project-tag">TensorFlow</span>
+                                        <span class="project-tag">React</span>
+                                        <span class="project-tag">MongoDB</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-card" data-category="Web Development">
+                                <div class="project-thumbnail">
+                                    <img src="https://picsum.photos/seed/project2/200/200.jpg" alt="Project Thumbnail">
+                                </div>
+                                <div class="project-details">
+                                    <h3 class="project-title">Campus Event Management System</h3>
+                                    <p class="project-description">Created a comprehensive platform for organizing and managing university events with real-time updates and attendance tracking.</p>
+                                    <div class="project-tags">
+                                        <span class="project-tag">Node.js</span>
+                                        <span class="project-tag">Express</span>
+                                        <span class="project-tag">MySQL</span>
+                                        <span class="project-tag">Socket.io</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-card" data-category="Web Development">
+                                <div class="project-thumbnail">
+                                    <img src="https://picsum.photos/seed/project3/200/200.jpg" alt="Project Thumbnail">
+                                </div>
+                                <div class="project-details">
+                                    <h3 class="project-title">Data Visualization Dashboard</h3>
+                                    <p class="project-description">Built an interactive dashboard for visualizing academic performance data and identifying trends across different departments.</p>
+                                    <div class="project-tags">
+                                        <span class="project-tag">D3.js</span>
+                                        <span class="project-tag">JavaScript</span>
+                                        <span class="project-tag">Python</span>
+                                        <span class="project-tag">Flask</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="expanded-content" id="projectsExpanded">
+                            <div class="projects-container">
+                                <div class="project-card" data-category="Mobile">
+                                    <div class="project-thumbnail">
+                                        <img src="https://picsum.photos/seed/project4/200/200.jpg" alt="Project Thumbnail">
+                                    </div>
+                                    <div class="project-details">
+                                        <h3 class="project-title">Mobile Learning App</h3>
+                                        <p class="project-description">Developed a cross-platform mobile application for on-the-go learning with offline capabilities and progress tracking.</p>
+                                        <div class="project-tags">
+                                            <span class="project-tag">React Native</span>
+                                            <span class="project-tag">Firebase</span>
+                                            <span class="project-tag">Redux</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="project-card" data-category="AI/ML">
+                                    <div class="project-thumbnail">
+                                        <img src="https://picsum.photos/seed/project5/200/200.jpg" alt="Project Thumbnail">
+                                    </div>
+                                    <div class="project-details">
+                                        <h3 class="project-title">Chatbot for Student Support</h3>
+                                        <p class="project-description">Created an intelligent chatbot to assist students with common queries and provide 24/7 support.</p>
+                                        <div class="project-tags">
+                                            <span class="project-tag">NLP</span>
+                                            <span class="project-tag">Python</span>
+                                            <span class="project-tag">Dialogflow</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Activity Timeline -->
+                    <section class="content-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-history"></i>
+                                Recent Activity
+                            </h2>
+                            <div class="card-actions">
+                                <button class="export-btn" onclick="exportSection('timeline')">
+                                    <i class="fas fa-file-export"></i> Export
+                                </button>
+                                <button class="view-all-btn" onclick="toggleExpanded('timeline')">
+                                    <i class="fas fa-expand"></i> View All
+                                </button>
+                            </div>
+                        </div>
+                        <div class="timeline" id="timelineContainer">
+                            <div class="timeline-item">
+                                <div class="timeline-date">November 15, 2023</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Completed Advanced Machine Learning Course</div>
+                                    <div class="timeline-description">Finished the final project on neural networks with a score of 98/100.</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">November 10, 2023</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Submitted Research Paper</div>
+                                    <div class="timeline-description">Co-authored a paper on "Optimizing Algorithm Efficiency in Big Data Processing" for the International Conference on Computer Science.</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">November 5, 2023</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Joined Coding Competition</div>
+                                    <div class="timeline-description">Participated in the National Coding Challenge and secured 3rd place among 500+ participants.</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">October 28, 2023</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Volunteered at Tech Workshop</div>
+                                    <div class="timeline-description">Conducted a workshop on web development basics for high school students.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="expanded-content" id="timelineExpanded">
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-date">October 15, 2023</div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-title">Published Blog Article</div>
+                                        <div class="timeline-description">Wrote an article about "The Future of AI in Education" which gained 500+ reads.</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-date">September 30, 2023</div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-title">Mentorship Program Started</div>
+                                        <div class="timeline-description">Began mentoring junior students in programming and career development.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Generate Button -->
+                        <div style="text-align: center; margin-top: 2rem;">
+                            <button class="generate-btn" onclick="showView('recommendations')">
+                                <i class="fas fa-magic"></i> Generate Recommendations
+                            </button>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+
+        <!-- Recommendations View -->
+        <div class="recommendations-container hidden" id="recommendationsView">
+            <div class="container">
+                <div class="recommendations-header">
+                    <div>
+                        <h1 class="recommendations-title">Personalized Recommendations</h1>
+                        <p class="recommendations-subtitle">Based on your academic performance and skills profile</p>
+                    </div>
+                    <div class="recommendations-actions">
+                        <button class="recommendations-btn secondary" onclick="showView('profile')">
+                            <i class="fas fa-arrow-left"></i> Back to Profile
+                        </button>
+                        <button class="recommendations-btn" onclick="refreshRecommendations()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recommended Skills Section -->
+                <section id="recommended-skills" class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-lightbulb"></i>
+                            Recommended Skills
+                        </h2>
+                        <div class="card-actions">
+                            <button class="view-all-btn" onclick="showNotification('View all recommendations coming soon!')">View All</button>
+                        </div>
+                    </div>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <div class="skill-icon">
+                                    <i class="fab fa-docker"></i>
+                                </div>
+                                <div class="skill-details">
+                                    <h4>Docker</h4>
+                                    <p>Containerization technology</p>
+                                </div>
+                            </div>
+                            <div class="skill-match">
+                                <div class="match-percentage">95%</div>
+                                <div class="match-label">Match</div>
+                            </div>
+                            <button class="skill-action" onclick="addRecommendedSkill('Docker')">Add</button>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <div class="skill-icon">
+                                    <i class="fab fa-figma"></i>
+                                </div>
+                                <div class="skill-details">
+                                    <h4>Figma</h4>
+                                    <p>UI/UX design tool</p>
+                                </div>
+                            </div>
+                            <div class="skill-match">
+                                <div class="match-percentage">88%</div>
+                                <div class="match-label">Match</div>
+                            </div>
+                            <button class="skill-action" onclick="addRecommendedSkill('Figma')">Add</button>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <div class="skill-icon">
+                                    <i class="fab fa-angular"></i>
+                                </div>
+                                <div class="skill-details">
+                                    <h4>Angular</h4>
+                                    <p>Web framework</p>
+                                </div>
+                            </div>
+                            <div class="skill-match">
+                                <div class="match-percentage">82%</div>
+                                <div class="match-label">Match</div>
+                            </div>
+                            <button class="skill-action" onclick="addRecommendedSkill('Angular')">Add</button>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <div class="skill-icon">
+                                    <i class="fab fa-kubernetes"></i>
+                                </div>
+                                <div class="skill-details">
+                                    <h4>Kubernetes</h4>
+                                    <p>Container orchestration</p>
+                                </div>
+                            </div>
+                            <div class="skill-match">
+                                <div class="match-percentage">78%</div>
+                                <div class="match-label">Match</div>
+                            </div>
+                            <button class="skill-action" onclick="addRecommendedSkill('Kubernetes')">Add</button>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <div class="skill-icon">
+                                    <i class="fab fa-python"></i>
+                                </div>
+                                <div class="skill-details">
+                                    <h4>TensorFlow</h4>
+                                    <p>Machine learning framework</p>
+                                </div>
+                            </div>
+                            <div class="skill-match">
+                                <div class="match-percentage">92%</div>
+                                <div class="match-label">Match</div>
+                            </div>
+                            <button class="skill-action" onclick="addRecommendedSkill('TensorFlow')">Add</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recommended Internships Section -->
+                <section id="recommended-internships" class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-briefcase"></i>
+                            Recommended Internships
+                        </h2>
+                        <div class="card-actions">
+                            <button class="view-all-btn" onclick="showNotification('Browse all internships coming soon!')">Browse All</button>
+                        </div>
+                    </div>
+                    <div class="internship-list">
+                        <div class="internship-item">
+                            <div class="internship-logo">TC</div>
+                            <div class="internship-details">
+                                <div class="internship-title">Software Developer Intern</div>
+                                <div class="internship-company">TechCorp</div>
+                                <div class="internship-meta">
+                                    <span><i class="fas fa-map-marker-alt"></i> San Francisco, CA</span>
+                                    <span><i class="fas fa-clock"></i> 3 months</span>
+                                    <span><i class="fas fa-dollar-sign"></i> $25/hr</span>
+                                </div>
+                            </div>
+                            <div class="internship-action">
+                                <button class="internship-btn" onclick="applyInternship('TechCorp')">Apply</button>
+                                <button class="internship-btn secondary" onclick="viewInternship('TechCorp')">View</button>
+                            </div>
+                        </div>
+                        <div class="internship-item">
+                            <div class="internship-logo">DS</div>
+                            <div class="internship-details">
+                                <div class="internship-title">Data Science Intern</div>
+                                <div class="internship-company">DataSoft</div>
+                                <div class="internship-meta">
+                                    <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                                    <span><i class="fas fa-clock"></i> 6 months</span>
+                                    <span><i class="fas fa-dollar-sign"></i> $22/hr</span>
+                                </div>
+                            </div>
+                            <div class="internship-action">
+                                <button class="internship-btn" onclick="applyInternship('DataSoft')">Apply</button>
+                                <button class="internship-btn secondary" onclick="viewInternship('DataSoft')">View</button>
+                            </div>
+                        </div>
+                        <div class="internship-item">
+                            <div class="internship-logo">AI</div>
+                            <div class="internship-details">
+                                <div class="internship-title">Machine Learning Intern</div>
+                                <div class="internship-company">AI Innovations</div>
+                                <div class="internship-meta">
+                                    <span><i class="fas fa-map-marker-alt"></i> New York, NY</span>
+                                    <span><i class="fas fa-clock"></i> 4 months</span>
+                                    <span><i class="fas fa-dollar-sign"></i> $28/hr</span>
+                                </div>
+                            </div>
+                            <div class="internship-action">
+                                <button class="internship-btn" onclick="applyInternship('AI Innovations')">Apply</button>
+                                <button class="internship-btn secondary" onclick="viewInternship('AI Innovations')">View</button>
+                            </div>
+                        </div>
+                        <div class="internship-item">
+                            <div class="internship-logo">GD</div>
+                            <div class="internship-details">
+                                <div class="internship-title">Game Development Intern</div>
+                                <div class="internship-company">GameDev Studios</div>
+                                <div class="internship-meta">
+                                    <span><i class="fas fa-map-marker-alt"></i> Austin, TX</span>
+                                    <span><i class="fas fa-clock"></i> 3 months</span>
+                                    <span><i class="fas fa-dollar-sign"></i> $24/hr</span>
+                                </div>
+                            </div>
+                            <div class="internship-action">
+                                <button class="internship-btn" onclick="applyInternship('GameDev Studios')">Apply</button>
+                                <button class="internship-btn secondary" onclick="viewInternship('GameDev Studios')">View</button>
+                            </div>
+                        </div>
+                        <div class="internship-item">
+                            <div class="internship-logo">CF</div>
+                            <div class="internship-details">
+                                <div class="internship-title">Cloud Engineering Intern</div>
+                                <div class="internship-company">CloudFirst</div>
+                                <div class="internship-meta">
+                                    <span><i class="fas fa-map-marker-alt"></i> Seattle, WA</span>
+                                    <span><i class="fas fa-clock"></i> 6 months</span>
+                                    <span><i class="fas fa-dollar-sign"></i> $30/hr</span>
+                                </div>
+                            </div>
+                            <div class="internship-action">
+                                <button class="internship-btn" onclick="applyInternship('CloudFirst')">Apply</button>
+                                <button class="internship-btn secondary" onclick="viewInternship('CloudFirst')">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About StudentHub</h3>
+                <p>Empowering students to showcase their achievements, skills, and projects in a professional digital portfolio. Connect, collaborate, and grow with our comprehensive student platform.</p>
+                <div class="footer-social">
+                    <a href="#" onclick="openSocialLink('facebook')"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" onclick="openSocialLink('twitter')"><i class="fab fa-twitter"></i></a>
+                    <a href="#" onclick="openSocialLink('linkedin')"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" onclick="openSocialLink('instagram')"><i class="fab fa-instagram"></i></a>
+                    <a href="#" onclick="openSocialLink('youtube')"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showView('dashboard')">Dashboard</a></li>
+                    <li><a href="#" onclick="showView('profile')">My Profile</a></li>
+                    <li><a href="#" onclick="showNotification('Browse Projects feature coming soon!')">Browse Projects</a></li>
+                    <li><a href="#" onclick="showNotification('Find Mentors feature coming soon!')">Find Mentors</a></li>
+                    <li><a href="#" onclick="showNotification('Career Resources feature coming soon!')">Career Resources</a></li>
+                    <li><a href="#" onclick="showNotification('Learning Paths feature coming soon!')">Learning Paths</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showNotification('Documentation feature coming soon!')">Documentation</a></li>
+                    <li><a href="#" onclick="showNotification('API Reference feature coming soon!')">API Reference</a></li>
+                    <li><a href="#" onclick="showNotification('Tutorials feature coming soon!')">Tutorials</a></li>
+                    <li><a href="#" onclick="showNotification('Blog feature coming soon!')">Blog</a></li>
+                    <li><a href="#" onclick="showNotification('Community Forum feature coming soon!')">Community Forum</a></li>
+                    <li><a href="#" onclick="showNotification('Support Center feature coming soon!')">Support Center</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showNotification('Privacy Policy feature coming soon!')">Privacy Policy</a></li>
+                    <li><a href="#" onclick="showNotification('Terms of Service feature coming soon!')">Terms of Service</a></li>
+                    <li><a href="#" onclick="showNotification('Cookie Policy feature coming soon!')">Cookie Policy</a></li>
+                    <li><a href="#" onclick="showNotification('GDPR Compliance feature coming soon!')">GDPR Compliance</a></li>
+                    <li><a href="#" onclick="showNotification('Accessibility feature coming soon!')">Accessibility</a></li>
+                    <li><a href="#" onclick="showNotification('Contact Us feature coming soon!')">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2023 StudentHub. All rights reserved.</p>
+            <div class="footer-links-inline">
+                <a href="#" onclick="showNotification('Privacy Policy feature coming soon!')">Privacy Policy</a>
+                <a href="#" onclick="showNotification('Terms of Service feature coming soon!')">Terms of Service</a>
+                <a href="#" onclick="showNotification('Cookie Policy feature coming soon!')">Cookie Policy</a>
+                <a href="#" onclick="showNotification('Sitemap feature coming soon!')">Sitemap</a>
+            </div>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                Made with <i class="fas fa-heart" style="color: var(--danger-color);"></i> by the StudentHub Team
+            </p>
+        </div>
+    </footer>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <button class="quick-action-btn quick-share" onclick="shareProfile()" title="Share Profile">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <button class="quick-action-btn quick-download" onclick="downloadProfile()" title="Download Profile">
+            <i class="fas fa-download"></i>
+        </button>
+        <button class="quick-action-btn quick-message" onclick="openMessageModal()" title="Send Message">
+            <i class="fas fa-envelope"></i>
+        </button>
+    </div>
+
+    <!-- Resume Upload Modal -->
+    <div id="resumeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Update Resume</h3>
+                <button class="close-modal" onclick="closeModal('resumeModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="resumeForm">
+                <div class="form-group">
+                    <label class="form-label" for="resumeName">Resume Name</label>
+                    <input type="text" class="form-input" id="resumeName" value="Alex_Johnson_Resume.pdf" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Upload Resume</label>
+                    <div class="file-upload">
+                        <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" required>
+                        <label for="resumeFile" class="file-upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Click to upload or drag and drop</span>
+                            <span>PDF, DOC, DOCX (MAX. 5MB)</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="resumeDescription">Description</label>
+                    <textarea class="form-textarea" id="resumeDescription" placeholder="Brief description of your resume and key highlights..."></textarea>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('resumeModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Upload Resume</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resume Viewer Modal -->
+    <div id="resumeViewerModal" class="modal">
+        <div class="modal-content" style="max-width: 90%; max-height: 90%;">
+            <div class="modal-header">
+                <h3 class="modal-title">Resume Viewer</h3>
+                <button class="close-modal" onclick="closeModal('resumeViewerModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="resume-viewer" id="resumeViewer">
+                <div class="resume-viewer-placeholder">
+                    <i class="fas fa-file-pdf"></i>
+                    <p>No resume uploaded yet</p>
+                    <button class="btn btn-primary" onclick="openModal('resumeModal')">Upload Resume</button>
+                </div>
+            </div>
+            <button class="resume-download" id="resumeDownloadBtn" style="display: none;" onclick="downloadResume()">
+                <i class="fas fa-download"></i> Download
+            </button>
+        </div>
+    </div>
+
+    <!-- Internship Details Modal -->
+    <div id="internshipModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="internshipModalTitle">Internship Details</h3>
+                <button class="close-modal" onclick="closeModal('internshipModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="internshipModalContent">
+                <!-- Content will be dynamically inserted -->
+            </div>
+            <div class="form-buttons">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('internshipModal')">Close</button>
+                <button type="button" class="btn btn-primary" id="internshipApplyBtn">Apply Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Add New Item</h3>
+                <button class="close-modal" onclick="closeModal('addModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="addForm">
+                <div class="form-group">
+                    <label class="form-label" for="itemName">Name</label>
+                    <input type="text" class="form-input" id="itemName" required>
+                </div>
+                <div class="form-group" id="levelGroup" style="display: none;">
+                    <label class="form-label" for="itemLevel">Level</label>
+                    <select class="form-select" id="itemLevel">
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+                <div class="form-group" id="dateGroup" style="display: none;">
+                    <label class="form-label" for="itemDate">Date</label>
+                    <input type="date" class="form-input" id="itemDate">
+                </div>
+                <div class="form-group" id="descriptionGroup" style="display: none;">
+                    <label class="form-label" for="itemDescription">Description</label>
+                    <textarea class="form-textarea" id="itemDescription"></textarea>
+                </div>
+                <div class="form-group" id="tagsGroup" style="display: none;">
+                    <label class="form-label" for="itemTags">Tags (comma separated)</label>
+                    <input type="text" class="form-input" id="itemTags" placeholder="Python, React, MongoDB">
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Profile</h3>
+                <button class="close-modal" onclick="closeModal('editProfileModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label class="form-label" for="editName">Full Name</label>
+                    <input type="text" class="form-input" id="editName" value="Alex Johnson">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="editTitle">Title</label>
+                    <input type="text" class="form-input" id="editTitle" value="Computer Science Student">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="editBio">Bio</label>
+                    <textarea class="form-textarea" id="editBio">Passionate about AI and machine learning. Currently working on innovative solutions for real-world problems.</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="editEmail">Email</label>
+                    <input type="email" class="form-input" id="editEmail" value="alex.johnson@university.edu">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="editPhone">Phone</label>
+                    <input type="tel" class="form-input" id="editPhone" value="+1 (555) 123-4567">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="editLocation">Location</label>
+                    <input type="text" class="form-input" id="editLocation" value="San Francisco, CA">
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('editProfileModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Send Message</h3>
+                <button class="close-modal" onclick="closeModal('messageModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="messageForm">
+                <div class="form-group">
+                    <label class="form-label" for="messageSubject">Subject</label>
+                    <input type="text" class="form-input" id="messageSubject" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="messageContent">Message</label>
+                    <textarea class="form-textarea" id="messageContent" required></textarea>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('messageModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Logout</h3>
+                <button class="close-modal" onclick="closeModal('logoutModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <p class="modal-text">Are you sure you want to logout? Any unsaved changes will be lost.</p>
+            <div class="form-buttons">
+                <button class="btn btn-secondary" onclick="closeModal('logoutModal')">Cancel</button>
+                <button class="btn btn-primary" style="background-color: var(--danger-color);" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="student-profile.js"></script>
+</body>
+</html>

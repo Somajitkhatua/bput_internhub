@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BPUT InternHub - AI Powered Internship Platform</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-graduation-cap"></i>BPUT InternHub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#internships">Internships</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#resources">Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2" id="authButtons">
+                    <button class="btn btn-outline-primary" onclick="showLoginModal('student')">
+                        <i class="fas fa-user-graduate me-2"></i>Student Login
+                    </button>
+                    <button class="btn btn-primary-custom" onclick="showLoginModal('company')">
+                        <i class="fas fa-building me-2"></i>Company Login
+                    </button>
+                </div>
+                <div class="d-flex gap-2 align-items-center" id="userProfile" style="display: none;">
+                    <div class="dropdown">
+                        <button class="btn btn-link text-decoration-none dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-2"></i><span id="userName">User</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="goToProfile()">
+                                <i class="fas fa-user me-2"></i>Profile
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" onclick="logout()">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="hero-title">AI Powered Internship Matchmaker</h1>
+                        <p class="hero-subtitle">Connect BPUT students with their dream internships through intelligent
+                            matching and personalized recommendations</p>
+
+                        <div class="search-bar">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-9">
+                                    <input type="text" placeholder="Find Internship by Skill or Domain"
+                                        id="searchInput">
+                                </div>
+                                <div class="col-md-3">
+                                    <button onclick="searchInternships()">
+                                        <i class="fas fa-search me-2"></i>Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button class="btn btn-accent btn-lg me-3" onclick="showRegistrationModal('student')">
+                                <i class="fas fa-user-plus me-2"></i>Register as Student
+                            </button>
+                            <button class="btn btn-outline-light btn-lg" onclick="showRegistrationModal('company')">
+                                <i class="fas fa-briefcase me-2"></i>Register as Company
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://picsum.photos/seed/internship/600/400" alt="Internship"
+                        class="img-fluid rounded-3 shadow-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="stat-number" data-target="500">0</div>
+                        <div class="stat-label">Internships Posted</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-number" data-target="1200">0</div>
+                        <div class="stat-label">Students Placed</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="stat-number" data-target="150">0</div>
+                        <div class="stat-label">Companies Onboard</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-number" data-target="95">0</div>
+                        <div class="stat-label">Success Rate %</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" style="color: var(--primary-blue); font-weight: 600;">Success Stories</h2>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="testimonial-card">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"BPUT InternHub helped me land my dream internship at a top tech
+                            company. The AI recommendations were spot on!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://picsum.photos/seed/student1/50/50" alt="Student" class="author-avatar">
+                            <div class="author-info">
+                                <h5>Rahul Kumar</h5>
+                                <p>CSE, BPUT</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="testimonial-card">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"The platform's AI screening saved us hours of manual work. We found
+                            the perfect candidates in no time!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://picsum.photos/seed/recruiter1/50/50" alt="Recruiter"
+                                class="author-avatar">
+                            <div class="author-info">
+                                <h5>Priya Sharma</h5>
+                                <p>HR Manager, TechCorp</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="testimonial-card">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="testimonial-text">"The resume builder and skill gap analyzer helped me improve my
+                            profile significantly. Got multiple offers!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://picsum.photos/seed/student2/50/50" alt="Student" class="author-avatar">
+                            <div class="author-info">
+                                <h5>Anjali Patel</h5>
+                                <p>ECE, BPUT</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5" style="color: var(--primary-blue); font-weight: 600;">Platform Features</h2>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="feature-title">AI Recommendations</h3>
+                        <p class="feature-description">Get personalized internship matches based on your skills,
+                            preferences, and career goals</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Smart Resume Builder</h3>
+                        <p class="feature-description">AI-powered resume builder with real-time suggestions and
+                            improvements</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Skill Gap Analysis</h3>
+                        <p class="feature-description">Identify skill gaps and get personalized learning recommendations
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <h3 class="feature-title">Smart Filters</h3>
+                        <p class="feature-description">Filter internships by domain, skills, stipend, location, and
+                            duration</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">BPUT Verification</h3>
+                        <p class="feature-description">Verified BPUT student accounts ensuring authentic opportunities
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3 class="feature-title">Real-time Notifications</h3>
+                        <p class="feature-description">Stay updated with instant notifications and chatbot assistance
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Internship Listings -->
+    <section id="internships" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" style="color: var(--primary-blue); font-weight: 600;">Featured Internships</h2>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <select class="form-select" id="domainFilter">
+                            <option value="">All Domains</option>
+                            <option value="web">Web Development</option>
+                            <option value="ai">AI/ML</option>
+                            <option value="mobile">Mobile Development</option>
+                            <option value="cloud">Cloud Computing</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="locationFilter">
+                            <option value="">All Locations</option>
+                            <option value="remote">Remote</option>
+                            <option value="bhubaneswar">Bhubaneswar</option>
+                            <option value="bangalore">Bangalore</option>
+                            <option value="hyderabad">Hyderabad</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="stipendFilter">
+                            <option value="">Any Stipend</option>
+                            <option value="unpaid">Unpaid</option>
+                            <option value="5k">₹5,000 - ₹10,000</option>
+                            <option value="10k">₹10,000 - ₹20,000</option>
+                            <option value="20k">Above ₹20,000</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="durationFilter">
+                            <option value="">Any Duration</option>
+                            <option value="1">1 Month</option>
+                            <option value="2">2 Months</option>
+                            <option value="3">3 Months</option>
+                            <option value="6">6 Months</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Internship Cards -->
+            <div class="row" id="internshipList">
+                <div class="col-lg-6 mb-4">
+                    <div class="internship-card">
+                        <span class="best-match-badge">
+                            <i class="fas fa-star me-1"></i>Best Match
+                        </span>
+                        <img src="https://picsum.photos/seed/company1/60/60" alt="Company" class="company-logo">
+                        <h3 class="internship-title">Frontend Development Intern</h3>
+                        <p class="internship-company">Tech Solutions Pvt Ltd</p>
+                        <div class="internship-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Bhubaneswar</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-rupee-sign"></i>
+                                <span>₹10,000/month</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>3 Months</span>
+                            </div>
+                        </div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">CSS</span>
+                            <span class="skill-tag">HTML</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary-custom flex-fill" onclick="applyForInternship()">
+                                <i class="fas fa-paper-plane me-2"></i>Apply Now
+                            </button>
+                            <button class="btn btn-outline-secondary" onclick="saveInternship()">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="internship-card">
+                        <img src="https://picsum.photos/seed/company2/60/60" alt="Company" class="company-logo">
+                        <h3 class="internship-title">Machine Learning Intern</h3>
+                        <p class="internship-company">AI Innovations</p>
+                        <div class="internship-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Remote</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-rupee-sign"></i>
+                                <span>₹15,000/month</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>4 Months</span>
+                            </div>
+                        </div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">Data Science</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary-custom flex-fill" onclick="applyForInternship()">
+                                <i class="fas fa-paper-plane me-2"></i>Apply Now
+                            </button>
+                            <button class="btn btn-outline-secondary" onclick="saveInternship()">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="internship-card">
+                        <img src="https://picsum.photos/seed/company3/60/60" alt="Company" class="company-logo">
+                        <h3 class="internship-title">Android Development Intern</h3>
+                        <p class="internship-company">MobileTech Solutions</p>
+                        <div class="internship-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Bangalore</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-rupee-sign"></i>
+                                <span>₹12,000/month</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>3 Months</span>
+                            </div>
+                        </div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Android</span>
+                            <span class="skill-tag">Kotlin</span>
+                            <span class="skill-tag">Java</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary-custom flex-fill" onclick="applyForInternship()">
+                                <i class="fas fa-paper-plane me-2"></i>Apply Now
+                            </button>
+                            <button class="btn btn-outline-secondary" onclick="saveInternship()">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="internship-card">
+                        <img src="https://picsum.photos/seed/company4/60/60" alt="Company" class="company-logo">
+                        <h3 class="internship-title">Cloud Computing Intern</h3>
+                        <p class="internship-company">CloudServe Technologies</p>
+                        <div class="internship-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Hyderabad</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-rupee-sign"></i>
+                                <span>₹18,000/month</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>6 Months</span>
+                            </div>
+                        </div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">AWS</span>
+                            <span class="skill-tag">DevOps</span>
+                            <span class="skill-tag">Docker</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary-custom flex-fill" onclick="applyForInternship()">
+                                <i class="fas fa-paper-plane me-2"></i>Apply Now
+                            </button>
+                            <button class="btn btn-outline-secondary" onclick="saveInternship()">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-primary btn-lg" onclick="loadMoreInternships()">
+                    <i class="fas fa-plus-circle me-2"></i>Load More Internships
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5" style="color: var(--primary-blue); font-weight: 600;">Resources & Blog</h2>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="resource-card">
+                        <img src="https://picsum.photos/seed/blog1/400/250" class="card-img-top" alt="Blog">
+                        <div class="resource-content">
+                            <h5 class="resource-title">How to Write the Perfect Resume</h5>
+                            <p class="resource-description">Learn the essential tips and tricks to create a resume that stands
+                                out...</p>
+                            <a href="#" class="btn btn-sm btn-accent">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="resource-card">
+                        <img src="https://picsum.photos/seed/blog2/400/250" class="card-img-top" alt="Blog">
+                        <div class="resource-content">
+                            <h5 class="resource-title">Top Skills for 2024</h5>
+                            <p class="resource-description">Discover the most in-demand skills that will boost your career...</p>
+                            <a href="#" class="btn btn-sm btn-accent">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="resource-card">
+                        <img src="https://picsum.photos/seed/blog3/400/250" class="card-img-top" alt="Blog">
+                        <div class="resource-content">
+                            <h5 class="resource-title">Interview Preparation Guide</h5>
+                            <p class="resource-description">Master the art of interviews with our comprehensive guide...</p>
+                            <a href="#" class="btn btn-sm btn-accent">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="mb-4" style="color: var(--primary-blue); font-weight: 600;">About BPUT InternHub</h2>
+                    <p class="mb-3">BPUT InternHub is a dedicated platform connecting BPUT students with quality
+                        internship opportunities. Our AI-powered system ensures the perfect match between students and
+                        companies.</p>
+                    <p class="mb-3">Our mission is to bridge the gap between academia and industry by providing students
+                        with real-world experience and companies with talented interns.</p>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <h4 style="color: var(--accent-color);">Our Vision</h4>
+                            <p>To become the leading internship platform for technical universities in India.</p>
+                        </div>
+                        <div class="col-6">
+                            <h4 style="color: var(--accent-color);">Our Values</h4>
+                            <p>Quality, Innovation, and Student Success are at the core of everything we do.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://picsum.photos/seed/about/600/400" alt="About" class="img-fluid rounded-3 shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="footer-title">BPUT InternHub</h4>
+                    <p>Empowering BPUT students with quality internship opportunities through AI-powered matching.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#internships">Internships</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#resources">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Support</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="footer-title">Newsletter</h5>
+                    <p>Subscribe to get the latest internship updates and career tips.</p>
+                    <div class="input-group mt-3">
+                        <input type="email" class="form-control" placeholder="Your email">
+                        <button class="btn btn-accent" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="text-center pb-3">
+                <p class="mb-0">&copy; 2024 BPUT InternHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalTitle">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                            <div class="invalid-feedback">Please enter a valid email address.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                            <div class="invalid-feedback">Password must be at least 8 characters long.</div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary-custom w-100">Login</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="#" class="text-decoration-none">Forgot Password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div class="modal fade" id="registrationModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registrationModalTitle">Register</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs mb-4" id="registrationTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="student-tab" data-bs-toggle="tab"
+                                data-bs-target="#student" type="button">Student</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="company-tab" data-bs-toggle="tab" data-bs-target="#company"
+                                type="button">Company</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="registrationTabContent">
+                        <div class="tab-pane fade show active" id="student" role="tabpanel">
+                            <form id="studentRegistrationForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Full Name</label>
+                                        <input type="text" class="form-control" id="studentName" required>
+                                        <div class="invalid-feedback">Name should only contain letters.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">BPUT Email</label>
+                                        <input type="email" class="form-control" id="studentEmail" required>
+                                        <div class="invalid-feedback">Please enter a valid BPUT email address.</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">College</label>
+                                        <select class="form-select" id="studentCollege" required>
+                                            <option value="">Select College</option>
+                                            <option>College of Engineering Bhubaneswar</option>
+                                            <option>IIIT Bhubaneswar</option>
+                                            <option>CET Bhubaneswar</option>
+                                        </select>
+                                        <div class="invalid-feedback">Please select a college.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Branch</label>
+                                        <select class="form-select" id="studentBranch" required>
+                                            <option value="">Select Branch</option>
+                                            <option>CSE</option>
+                                            <option>ECE</option>
+                                            <option>EEE</option>
+                                            <option>Mechanical</option>
+                                            <option>Civil</option>
+                                        </select>
+                                        <div class="invalid-feedback">Please select a branch.</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Year</label>
+                                        <select class="form-select" id="studentYear" required>
+                                            <option value="">Select Year</option>
+                                            <option>1st Year</option>
+                                            <option>2nd Year</option>
+                                            <option>3rd Year</option>
+                                            <option>4th Year</option>
+                                        </select>
+                                        <div class="invalid-feedback">Please select a year.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control" id="studentPhone" required>
+                                        <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="studentPassword" required>
+                                    <div class="invalid-feedback">Password must be at least 8 characters long.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="studentConfirmPassword" required>
+                                    <div class="invalid-feedback">Passwords do not match.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Upload Resume</label>
+                                    <input type="file" class="form-control" accept=".pdf,.doc,.docx">
+                                </div>
+                                <button type="submit" class="btn btn-primary-custom w-100">Register</button>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="company" role="tabpanel">
+                            <form id="companyRegistrationForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Company Name</label>
+                                        <input type="text" class="form-control" id="companyName" required>
+                                        <div class="invalid-feedback">Company name should only contain letters and spaces.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Industry</label>
+                                        <select class="form-select" id="companyIndustry" required>
+                                            <option value="">Select Industry</option>
+                                            <option>IT/Software</option>
+                                            <option>Electronics</option>
+                                            <option>Manufacturing</option>
+                                            <option>Consulting</option>
+                                        </select>
+                                        <div class="invalid-feedback">Please select an industry.</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="companyEmail" required>
+                                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Phone</label>
+                                        <input type="tel" class="form-control" id="companyPhone" required>
+                                        <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Address</label>
+                                    <textarea class="form-control" rows="3" id="companyAddress" required></textarea>
+                                    <div class="invalid-feedback">Please enter an address.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Website</label>
+                                    <input type="url" class="form-control" id="companyWebsite">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="companyPassword" required>
+                                    <div class="invalid-feedback">Password must be at least 8 characters long.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="companyConfirmPassword" required>
+                                    <div class="invalid-feedback">Passwords do not match.</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary-custom w-100">Register</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Notification Modal -->
+    <div class="modal fade" id="emailNotificationModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Email Notification Sent</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-envelope-open-text" style="font-size: 3rem; color: var(--success);"></i>
+                    </div>
+                    <h4>Registration Successful!</h4>
+                    <p class="mb-3">A confirmation email has been sent to your registered email address.</p>
+                    <p class="mb-4">Please check your inbox and follow the instructions to complete your registration.</p>
+                    <button type="button" class="btn btn-primary-custom" data-bs-dismiss="modal" onclick="showLoginModal(userType)">Go to Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+
+</html>

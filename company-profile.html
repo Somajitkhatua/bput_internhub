@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Profile - BPUT InternHub</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="company-profile.css">
+</head>
+
+<body data-theme="dark">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-graduation-cap"></i>BPUT InternHub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#internships">Internships</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#resources">Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#about">About</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2 align-items-center">
+                    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn btn-link text-decoration-none dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-building me-2"></i><span id="companyName">Company</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#">
+                                <i class="fas fa-building me-2"></i>Profile
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="index.html" onclick="logout()">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+        <div class="profile-layout">
+            <!-- Left Sidebar -->
+            <div class="profile-sidebar">
+                <!-- Profile Card -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <img src="https://picsum.photos/seed/companyprofile/200/200" alt="Company Logo" class="profile-avatar" id="companyLogo">
+                        <h2 class="profile-name" id="companyNameHeader">TechCorp Solutions</h2>
+                        <p class="profile-title" id="companyIndustry">IT/Software Development</p>
+                    </div>
+                    <div class="profile-bio">
+                        Leading technology company focused on innovation and excellence in software development and AI solutions.
+                    </div>
+                    <div class="profile-info">
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="companyLocation">Bhubaneswar, Odisha, India</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-globe"></i>
+                            <span id="companyWebsite">www.techcorp.com</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span id="companyEmail">hr@techcorp.com</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span id="companyPhone">+91 9876543210</span>
+                        </div>
+                    </div>
+                    <div class="profile-badges">
+                        <span class="profile-badge"><i class="fas fa-check-circle me-1"></i>Verified</span>
+                        <span class="profile-badge"><i class="fas fa-star me-1"></i>Top Recruiter</span>
+                        <span class="profile-badge"><i class="fas fa-award me-1"></i>Excellence Award</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="nav-menu">
+                    <a href="#" class="nav-menu-item active" onclick="showSection('overview')">
+                        <i class="fas fa-tachometer-alt"></i>Dashboard
+                    </a>
+                    <a href="#" class="nav-menu-item" onclick="showSection('profile')">
+                        <i class="fas fa-building"></i>Company Profile
+                    </a>
+                    <a href="#" class="nav-menu-item" onclick="showSection('postings')">
+                        <i class="fas fa-briefcase"></i>Job Postings
+                    </a>
+                    <a href="#" class="nav-menu-item" onclick="showSection('applications')">
+                        <i class="fas fa-users"></i>Applications
+                    </a>
+                    <a href="#" class="nav-menu-item" onclick="showSection('shortlisted')">
+                        <i class="fas fa-user-tie"></i>Shortlisted
+                    </a>
+                    <a href="#" class="nav-menu-item" onclick="showSection('analytics')">
+                        <i class="fas fa-chart-bar"></i>Analytics
+                    </a>
+                    <a href="#" class="nav-menu-item" onclick="showSection('settings')">
+                        <i class="fas fa-cog"></i>Settings
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Overview Section -->
+                <div id="overview-section" class="content-section">
+                    <!-- Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Active Internships</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">156</div>
+                            <div class="stat-label">Total Applications</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Shortlisted</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Hired</div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Applications -->
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h3 class="card-title">
+                                <i class="fas fa-users"></i>Recent Applications
+                            </h3>
+                        </div>
+                        <div class="application-item">
+                            <div class="application-header">
+                                <div class="application-name">Rahul Kumar - Frontend Developer</div>
+                                <div class="application-status status-reviewed">Reviewed</div>
+                            </div>
+                            <div class="application-meta">
+                                <span><i class="fas fa-graduation-cap"></i> CSE, BPUT</span>
+                                <span><i class="fas fa-calendar"></i> Oct 15, 2023</span>
+                            </div>
+                            <div class="application-actions">
+                                <button class="btn-sm-custom btn-primary-sm" onclick="shortlistCandidate('Rahul Kumar', 'Frontend Developer')">Shortlist</button>
+                                <button class="btn-sm-custom btn-outline-sm" onclick="viewProfile('Rahul Kumar', 'Frontend Developer')">View Profile</button>
+                                <button class="btn-sm-custom btn-outline-sm" onclick="openChat('Rahul Kumar', 'Frontend Developer')">Message</button>
+                            </div>
+                        </div>
+                        <div class="application-item">
+                            <div class="application-header">
+                                <div class="application-name">Anjali Patel - ML Intern</div>
+                                <div class="application-status status-pending">Pending</div>
+                            </div>
+                            <div class="application-meta">
+                                <span><i class="fas fa-graduation-cap"></i> ECE, BPUT</span>
+                                <span><i class="fas fa-calendar"></i> Oct 10, 2023</span>
+                            </div>
+                            <div class="application-actions">
+                                <button class="btn-sm-custom btn-primary-sm" onclick="shortlistCandidate('Anjali Patel', 'ML Intern')">Shortlist</button>
+                                <button class="btn-sm-custom btn-outline-sm" onclick="viewProfile('Anjali Patel', 'ML Intern')">View Profile</button>
+                                <button class="btn-sm-custom btn-outline-sm" onclick="openChat('Anjali Patel', 'ML Intern')">Message</button>
+                            </div>
+                        </div>
+                        <div class="application-item">
+                            <div class="application-header">
+                                <div class="application-name">Priya Sharma - Android Developer</div>
+                                <div class="application-status status-reviewed">Reviewed</div>
+                            </div>
+                            <div class="application-meta">
+                                <span><i class="fas fa-graduation-cap"></i> IT, BPUT</span>
+                                <span><i class="fas fa-calendar"></i> Oct 8, 2023</span>
+                            </div>
+                            <div class="application-actions">
+                                <button class="btn-sm-custom btn-primary-sm" onclick="shortlistCandidate('Priya Sharma', 'Android Developer')">Shortlist</button>
+                                <button class="btn-sm-custom btn-outline-sm" onclick="viewProfile('Priya Sharma', 'Android Developer')">View Profile</button>
+                                <button class="btn-sm-custom btn-outline-sm" onclick="openChat('Priya Sharma', 'Android Developer')">Message</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Application Trends -->
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-line"></i>Application Trends
+                            </h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="applicationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company Profile Section -->
+                <div id="profile-section" class="content-section" style="display: none;">
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h3 class="card-title">
+                                <i class="fas fa-building"></i>Company Profile
+                            </h3>
+                            <button class="btn-sm-custom btn-primary-sm" onclick="toggleEditMode()">
+                                <i class="fas fa-edit me-1" id="editIcon"></i><span id="editText">Edit</span>
+                            </button>
+                        </div>
+                        <form id="companyProfileForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Company Name</label>
+                                    <input type="text" class="form-control" id="profileCompanyName" value="TechCorp Solutions" disabled>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Industry</label>
+                                    <select class="form-select" id="profileCompanyIndustry" disabled>
+                                        <option>IT/Software</option>
+                                        <option>Electronics</option>
+                                        <option>Manufacturing</option>
+                                        <option>Consulting</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="profileCompanyEmail" value="hr@techcorp.com" disabled>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" id="profileCompanyPhone" value="9876543210" disabled>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" rows="2" id="profileCompanyAddress" disabled>Plot No. 123, Tech Park, Bhubaneswar, Odisha, India - 751024</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Website</label>
+                                <input type="url" class="form-control" id="profileCompanyWebsite" value="www.techcorp.com" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Company Description</label>
+                                <textarea class="form-control" rows="3" id="profileCompanyDescription" disabled>We are a leading technology company focused on innovation and excellence in software development and AI solutions.</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Company Location</label>
+                                <div class="map-container" id="companyMap">
+                                    <div class="map-placeholder">
+                                        <i class="fas fa-map-marked-alt"></i>
+                                        <p>Company Location</p>
+                                        <small>Plot No. 123, Tech Park, Bhubaneswar</small>
+                                        <div class="mt-2">
+                                            <a href="https://maps.google.com/?q=20.2961,85.8245" target="_blank" class="btn-sm-custom btn-primary-sm">
+                                                <i class="fas fa-external-link-alt me-1"></i>View on Google Maps
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end" id="saveButtonContainer" style="display: none;">
+                                <button type="button" class="btn-sm-custom btn-primary-sm" onclick="saveProfile()">
+                                    <i class="fas fa-save me-1"></i>Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Job Postings Section -->
+                <div id="postings-section" class="content-section" style="display: none;">
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h3 class="card-title">
+                                <i class="fas fa-briefcase"></i>Job Postings
+                            </h3>
+                            <button class="btn-sm-custom btn-primary-sm" onclick="openNewJobModal()">
+                                <i class="fas fa-plus me-1"></i>Post New
+                            </button>
+                        </div>
+                        <div id="jobPostingsContainer">
+                            <div class="job-item">
+                                <div class="job-title">Frontend Development Intern</div>
+                                <div class="job-meta">
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Bhubaneswar</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-rupee-sign"></i>
+                                        <span>₹10,000/month</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>3 Months</span>
+                                    </div>
+                                </div>
+                                <div class="job-description">
+                                    Looking for motivated Frontend Development Intern with React, JavaScript, and CSS experience.
+                                </div>
+                                <div class="job-footer">
+                                    <div class="applicant-count">
+                                        <i class="fas fa-users me-1"></i>24 applicants
+                                    </div>
+                                    <div class="application-actions">
+                                        <button class="btn-sm-custom btn-primary-sm" onclick="viewJobApplications('Frontend Development Intern')">View</button>
+                                        <button class="btn-sm-custom btn-outline-sm" onclick="editJob('Frontend Development Intern')">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-item">
+                                <div class="job-title">Machine Learning Intern</div>
+                                <div class="job-meta">
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Remote</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-rupee-sign"></i>
+                                        <span>₹15,000/month</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>4 Months</span>
+                                    </div>
+                                </div>
+                                <div class="job-description">
+                                    Seeking talented ML Intern for exciting AI projects with Python, TensorFlow, and data science experience.
+                                </div>
+                                <div class="job-footer">
+                                    <div class="applicant-count">
+                                        <i class="fas fa-users me-1"></i>18 applicants
+                                    </div>
+                                    <div class="application-actions">
+                                        <button class="btn-sm-custom btn-primary-sm" onclick="viewJobApplications('Machine Learning Intern')">View</button>
+                                        <button class="btn-sm-custom btn-outline-sm" onclick="editJob('Machine Learning Intern')">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-item">
+                                <div class="job-title">Android Development Intern</div>
+                                <div class="job-meta">
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Bhubaneswar</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-rupee-sign"></i>
+                                        <span>₹12,000/month</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>3 Months</span>
+                                    </div>
+                                </div>
+                                <div class="job-description">
+                                    Looking for Android Development Intern with Kotlin/Java experience and knowledge of mobile app development.
+                                </div>
+                                <div class="job-footer">
+                                    <div class="applicant-count">
+                                        <i class="fas fa-users me-1"></i>15 applicants
+                                    </div>
+                                    <div class="application-actions">
+                                        <button class="btn-sm-custom btn-primary-sm" onclick="viewJobApplications('Android Development Intern')">View</button>
+                                        <button class="btn-sm-custom btn-outline-sm" onclick="editJob('Android Development Intern')">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-item">
+                                <div class="job-title">Backend Development Intern</div>
+                                <div class="job-meta">
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Hybrid</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-rupee-sign"></i>
+                                        <span>₹13,000/month</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>4 Months</span>
+                                    </div>
+                                </div>
+                                <div class="job-description">
+                                    Seeking Backend Development Intern with Node.js, Express, and database management experience.
+                                </div>
+                                <div class="job-footer">
+                                    <div class="applicant-count">
+                                        <i class="fas fa-users me-1"></i>20 applicants
+                                    </div>
+                                    <div class="application-actions">
+                                        <button class="btn-sm-custom btn-primary-sm" onclick="viewJobApplications('Backend Development Intern')">View</button>
+                                        <button class="btn-sm-custom btn-outline-sm" onclick="editJob('Backend Development Intern')">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-item">
+                                <div class="job-title">UI/UX Design Intern</div>
+                                <div class="job-meta">
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Remote</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-rupee-sign"></i>
+                                        <span>₹8,000/month</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>3 Months</span>
+                                    </div>
+                                </div>
+                                <div class="job-description">
+                                    Looking for creative UI/UX Design Intern with Figma, Adobe XD, and prototyping experience.
+                                </div>
+                                <div class="job-footer">
+                                    <div class="applicant-count">
+                                        <i class="fas fa-users me-1"></i>12 applicants
+                                    </div>
+                                    <div class="application-actions">
+                                        <button class="btn-sm-custom btn-primary-sm" onclick="viewJobApplications('UI/UX Design Intern')">View</button>
+                                        <button class="btn-sm-custom btn-outline-sm" onclick="editJob('UI/UX Design Intern')">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-item">
+                                <div class="job-title">Data Science Intern</div>
+                                <div class="job-meta">
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Bhubaneswar</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-rupee-sign"></i>
+                                        <span>₹16,000/month</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>6 Months</span>
+                                    </div>
+                                </div>
+                                <div class="job-description">
+                                    Seeking Data Science Intern with Python, R, SQL, and statistical analysis experience for research projects.
+                                </div>
+                                <div class="job-footer">
+                                    <div class="applicant-count">
+                                        <i class="fas fa-users me-1"></i>22 applicants
+                                    </div>
+                                    <div class="application-actions">
+                                        <button class="btn-sm-custom btn-primary-sm" onclick="viewJobApplications('Data Science Intern')">View</button>
+                                        <button class="btn-sm-custom btn-outline-sm" onclick="editJob('Data Science Intern')">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-item">
+                                <div class="job-title">DevOps Intern</div>
+                                <div class="job-meta">
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Hybrid</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-rupee-sign"></i>
+                                        <span>₹14,000/month</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>4 Months</span>
+                                    </div>
+                                </div>
+                                <div class="job-description">
+                                    Looking for DevOps Intern with Docker, Kubernetes, CI/CD, and cloud platform experience.
+                                </div>
+                                <div class="job-footer">
+                                    <div class="applicant-count">
+                                        <i class="fas fa-users me-1"></i>16 applicants
+                                    </div>
+                                    <div class="application-actions">
+                                        <button class="btn-sm-custom btn-primary-sm" onclick="viewJobApplications('DevOps Intern')">View</button>
+                                        <button class="btn-sm-custom btn-outline-sm" onclick="editJob('DevOps Intern')">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job-item">
+                                <div class="job-title">Cybersecurity Intern</div>
+                                <div class="job-meta">
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Bhubaneswar</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-rupee-sign"></i>
+                                        <span>₹15,000/month</span>
+                                    </div>
+                                    <div class="job-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>5 Months</span>
+                                    </div>
+                                </div>
+                                <div class="job-description">
+                                    Seeking Cybersecurity Intern with network security, ethical hacking, and security analysis experience.
+                                </div>
+                                <div class="job-footer">
+                                    <div class="applicant-count">
+                                        <i class="fas fa-users me-1"></i>19 applicants
+                                    </div>
+                                    <div class="application-actions">
+                                        <button class="btn-sm-custom btn-primary-sm" onclick="viewJobApplications('Cybersecurity Intern')">View</button>
+                                        <button class="btn-sm-custom btn-outline-sm" onclick="editJob('Cybersecurity Intern')">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Applications Section -->
+                <div id="applications-section" class="content-section" style="display: none;">
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h3 class="card-title">
+                                <i class="fas fa-users"></i>All Applications
+                            </h3>
+                        </div>
+                        <div id="applicationsContainer">
+                            <div class="application-item">
+                                <div class="application-header">
+                                    <div class="application-name">Rahul Kumar - Frontend Developer</div>
+                                    <div class="application-status status-reviewed">Reviewed</div>
+                                </div>
+                                <div class="application-meta">
+                                    <span><i class="fas fa-graduation-cap"></i> CSE, BPUT</span>
+                                    <span><i class="fas fa-calendar"></i> Oct 15, 2023</span>
+                                </div>
+                                <div class="application-actions">
+                                    <button class="btn-sm-custom btn-primary-sm" onclick="shortlistCandidate('Rahul Kumar', 'Frontend Developer')">Shortlist</button>
+                                    <button class="btn-sm-custom btn-outline-sm" onclick="viewProfile('Rahul Kumar', 'Frontend Developer')">View Profile</button>
+                                    <button class="btn-sm-custom btn-outline-sm" onclick="openChat('Rahul Kumar', 'Frontend Developer')">Message</button>
+                                </div>
+                            </div>
+                            <div class="application-item">
+                                <div class="application-header">
+                                    <div class="application-name">Anjali Patel - ML Intern</div>
+                                    <div class="application-status status-pending">Pending</div>
+                                </div>
+                                <div class="application-meta">
+                                    <span><i class="fas fa-graduation-cap"></i> ECE, BPUT</span>
+                                    <span><i class="fas fa-calendar"></i> Oct 10, 2023</span>
+                                </div>
+                                <div class="application-actions">
+                                    <button class="btn-sm-custom btn-primary-sm" onclick="shortlistCandidate('Anjali Patel', 'ML Intern')">Shortlist</button>
+                                    <button class="btn-sm-custom btn-outline-sm" onclick="viewProfile('Anjali Patel', 'ML Intern')">View Profile</button>
+                                    <button class="btn-sm-custom btn-outline-sm" onclick="openChat('Anjali Patel', 'ML Intern')">Message</button>
+                                </div>
+                            </div>
+                            <div class="application-item">
+                                <div class="application-header">
+                                    <div class="application-name">Priya Sharma - Android Developer</div>
+                                    <div class="application-status status-reviewed">Reviewed</div>
+                                </div>
+                                <div class="application-meta">
+                                    <span><i class="fas fa-graduation-cap"></i> IT, BPUT</span>
+                                    <span><i class="fas fa-calendar"></i> Oct 8, 2023</span>
+                                </div>
+                                <div class="application-actions">
+                                    <button class="btn-sm-custom btn-primary-sm" onclick="shortlistCandidate('Priya Sharma', 'Android Developer')">Shortlist</button>
+                                    <button class="btn-sm-custom btn-outline-sm" onclick="viewProfile('Priya Sharma', 'Android Developer')">View Profile</button>
+                                    <button class="btn-sm-custom btn-outline-sm" onclick="openChat('Priya Sharma', 'Android Developer')">Message</button>
+                                </div>
+                            </div>
+                            <div class="application-item">
+                                <div class="application-header">
+                                    <div class="application-name">Amit Singh - Backend Developer</div>
+                                    <div class="application-status status-pending">Pending</div>
+                                </div>
+                                <div class="application-meta">
+                                    <span><i class="fas fa-graduation-cap"></i> CSE, BPUT</span>
+                                    <span><i class="fas fa-calendar"></i> Oct 5, 2023</span>
+                                </div>
+                                <div class="application-actions">
+                                    <button class="btn-sm-custom btn-primary-sm" onclick="shortlistCandidate('Amit Singh', 'Backend Developer')">Shortlist</button>
+                                    <button class="btn-sm-custom btn-outline-sm" onclick="viewProfile('Amit Singh', 'Backend Developer')">View Profile</button>
+                                    <button class="btn-sm-custom btn-outline-sm" onclick="openChat('Amit Singh', 'Backend Developer')">Message</button>
+                                </div>
+                            </div>
+                            <div class="application-item">
+                                <div class="application-header">
+                                    <div class="application-name">Sneha Reddy - UI/UX Designer</div>
+                                    <div class="application-status status-reviewed">Reviewed</div>
+                                </div>
+                                <div class="application-meta">
+                                    <span><i class="fas fa-graduation-cap"></i> B.Des, NIFT</span>
+                                    <span><i class="fas fa-calendar"></i> Oct 3, 2023</span>
+                                </div>
+                                <div class="application-actions">
+                                    <button class="btn-sm-custom btn-primary-sm" onclick="shortlistCandidate('Sneha Reddy', 'UI/UX Designer')">Shortlist</button>
+                                    <button class="btn-sm-custom btn-outline-sm" onclick="viewProfile('Sneha Reddy', 'UI/UX Designer')">View Profile</button>
+                                    <button class="btn-sm-custom btn-outline-sm" onclick="openChat('Sneha Reddy', 'UI/UX Designer')">Message</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shortlisted Section -->
+                <div id="shortlisted-section" class="content-section" style="display: none;">
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h3 class="card-title">
+                                <i class="fas fa-user-tie"></i>Shortlisted Candidates
+                            </h3>
+                        </div>
+                        <div id="shortlistedContainer">
+                            <!-- Shortlisted candidates will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Section -->
+                <div id="analytics-section" class="content-section" style="display: none;">
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-bar"></i>Analytics
+                            </h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h5 class="mb-2">Application Sources</h5>
+                                <div class="chart-container">
+                                    <canvas id="sourceChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5 class="mb-2">Hiring Funnel</h5>
+                                <div class="chart-container">
+                                    <canvas id="funnelChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="settings-section" class="content-section" style="display: none;">
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h3 class="card-title">
+                                <i class="fas fa-cog"></i>Settings
+                            </h3>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h6>Email Notifications</h6>
+                                <p>Receive email updates about new applications</p>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h6>Profile Visibility</h6>
+                                <p>Make your company profile visible to students</p>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="profileVisibility" checked>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h6>AI Matching</h6>
+                                <p>Use AI to find the best candidates</p>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="aiMatching" checked>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button class="btn-sm-custom btn-outline-sm me-2">
+                                <i class="fas fa-key me-1"></i>Change Password
+                            </button>
+                            <button class="btn-sm-custom btn-outline-sm" style="border-color: var(--danger-color); color: var(--danger-color);">
+                                <i class="fas fa-trash me-1"></i>Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Profile Modal -->
+    <div class="modal fade" id="studentProfileModal" tabindex="-1" aria-labelledby="studentProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="studentProfileModalLabel">Student Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <img src="https://picsum.photos/seed/studentprofile/200/200" alt="Student Avatar" class="img-fluid rounded-circle mb-3">
+                            <h5 id="modalStudentName">Student Name</h5>
+                            <p id="modalStudentPosition">Position</p>
+                        </div>
+                        <div class="col-md-8">
+                            <h6 class="mb-3">Personal Information</h6>
+                            <div class="mb-2"><strong>Email:</strong> <span id="modalStudentEmail">student@example.com</span></div>
+                            <div class="mb-2"><strong>Phone:</strong> <span id="modalStudentPhone">+91 9876543210</span></div>
+                            <div class="mb-2"><strong>Education:</strong> <span id="modalStudentEducation">B.Tech, CSE</span></div>
+                            <div class="mb-2"><strong>University:</strong> <span id="modalStudentUniversity">BPUT</span></div>
+                            <div class="mb-2"><strong>Location:</strong> <span id="modalStudentLocation">Bhubaneswar, India</span></div>
+                            
+                            <h6 class="mb-3 mt-4">Skills</h6>
+                            <div id="modalStudentSkills">
+                                <span class="badge bg-primary me-2 mb-2">JavaScript</span>
+                                <span class="badge bg-primary me-2 mb-2">React</span>
+                                <span class="badge bg-primary me-2 mb-2">Node.js</span>
+                                <span class="badge bg-primary me-2 mb-2">MongoDB</span>
+                            </div>
+                            
+                            <h6 class="mb-3 mt-4">Resume</h6>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-file-pdf me-2 text-danger"></i>
+                                <span id="modalStudentResume">Student_Resume.pdf</span>
+                                <button class="btn-sm-custom btn-outline-sm ms-3">Download</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-sm-custom btn-outline-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn-sm-custom btn-primary-sm" onclick="shortlistFromModal()">Shortlist</button>
+                    <button type="button" class="btn-sm-custom btn-primary-sm" onclick="openChatFromModal()">Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Modal -->
+    <div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="chatModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header p-0">
+                    <div class="chat-header w-100">
+                        <img src="https://picsum.photos/seed/studentprofile/200/200" alt="Student Avatar" id="chatStudentAvatar">
+                        <div>
+                            <h5 class="mb-0" id="chatStudentName">Student Name</h5>
+                            <small>Online</small>
+                        </div>
+                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chatMessages">
+                            <!-- Messages will be added here dynamically -->
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="messageInput" placeholder="Type a message...">
+                            <button onclick="sendMessage()">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-sm-custom btn-primary-sm" onclick="sendCongratulations()">
+                        <i class="fas fa-trophy me-1"></i>Send Congratulations
+                    </button>
+                    <button type="button" class="btn-sm-custom btn-primary-sm" onclick="sendLocation()">
+                        <i class="fas fa-map-marker-alt me-1"></i>Send Location
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Job Posting Modal -->
+    <div class="modal fade" id="newJobModal" tabindex="-1" aria-labelledby="newJobModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newJobModalLabel">Post New Internship</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newJobForm">
+                        <div class="mb-3">
+                            <label class="form-label">Job Title</label>
+                            <input type="text" class="form-control" id="jobTitle" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" id="jobLocation" required>
+                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Stipend</label>
+                                <input type="text" class="form-control" id="jobStipend" required>
+                                </div>
+                            </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Duration</label>
+                                <input type="text" class="form-control" id="jobDuration" required>
+                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Work Type</label>
+                                <select class="form-select" id="jobType">
+                                    <option>On-site</option>
+                                    <option>Remote</option>
+                                    <option>Hybrid</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Job Description</label>
+                            <textarea class="form-control" rows="4" id="jobDescription" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Required Skills</label>
+                            <input type="text" class="form-control" id="jobSkills" placeholder="e.g., JavaScript, React, Node.js">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-sm-custom btn-outline-sm" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn-sm-custom btn-primary-sm" onclick="postNewJob()">Post Job</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom JS -->
+    <script src="company-profile.js"></script>
+</body>
+</html>
