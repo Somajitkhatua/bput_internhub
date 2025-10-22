@@ -1321,7 +1321,24 @@ Data Science Intern at DataSoft (Summer 2025)</textarea>
             </div>
         </div>
     </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+     const user = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if (user) {
+        // Example: Show name in profile header
+        document.getElementById('profileName').textContent = user.name; // Make sure your user object has a 'name' property
 
+        // Optionally show other info
+        // document.getElementById('profileEmail').textContent = user.email;
+        // document.getElementById('profilePhone').textContent = user.phone;
+    } else {
+        // If no user is logged in, redirect to login page
+        window.location.href = 'index.html';
+    }
+});
+
+    </script>
     <script src="student-profile.js"></script>
 </body>
 </html>
