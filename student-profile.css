@@ -261,6 +261,8 @@ nav a:hover::after, nav a.active::after {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+     min-height: 120px;
+      justify-content: center;
 }
 
 .dashboard-title {
@@ -276,6 +278,7 @@ nav a:hover::after, nav a.active::after {
 .dashboard-actions {
     display: flex;
     gap: 1rem;
+     align-items: cover;
 }
 
 .dashboard-btn {

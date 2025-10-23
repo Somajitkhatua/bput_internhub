@@ -1032,3 +1032,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.getElementById("generateBtn").addEventListener("click", function() {
+    window.open("ai.html", "_blank");  
+});
+
+
+

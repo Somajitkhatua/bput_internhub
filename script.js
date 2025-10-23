@@ -324,14 +324,17 @@ document.getElementById('studentRegistrationForm')?.addEventListener('submit', (
         password
     };
     
-    students.push(newStudent);
-    localStorage.setItem('students', JSON.stringify(students));
-    
-    // Send email notification
-    sendEmailNotification(email, name, 'student');
-    
-    // Close registration modal
-    bootstrap.Modal.getInstance(document.getElementById('registrationModal')).hide();
+   students.push(newStudent);
+localStorage.setItem('students', JSON.stringify(students));
+
+// Show registration success notification
+showNotification('Registration successful!', 'success');
+
+// Send email notification
+sendEmailNotification(email, name, 'student');
+
+// Close registration modal
+bootstrap.Modal.getInstance(document.getElementById('registrationModal')).hide();
 });
 
 // Company Registration Form Submission
@@ -410,14 +413,17 @@ document.getElementById('companyRegistrationForm')?.addEventListener('submit', (
         password
     };
     
-    companies.push(newCompany);
-    localStorage.setItem('companies', JSON.stringify(companies));
-    
-    // Send email notification
-    sendEmailNotification(email, name, 'company');
-    
-    // Close registration modal
-    bootstrap.Modal.getInstance(document.getElementById('registrationModal')).hide();
+   companies.push(newCompany);
+localStorage.setItem('companies', JSON.stringify(companies));
+
+// Show registration success notification
+showNotification('Registration successful!', 'success');
+
+// Send email notification
+sendEmailNotification(email, name, 'company');
+
+// Close registration modal
+bootstrap.Modal.getInstance(document.getElementById('registrationModal')).hide();
 });
 
 // Update UI for logged in user
@@ -466,14 +472,37 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Filter Internships
-document.getElementById('domainFilter')?.addEventListener('change', filterInternships);
-document.getElementById('locationFilter')?.addEventListener('change', filterInternships);
-document.getElementById('stipendFilter')?.addEventListener('change', filterInternships);
-document.getElementById('durationFilter')?.addEventListener('change', filterInternships);
+document.addEventListener('DOMContentLoaded', () => {
+    const filters = ['domainFilter', 'locationFilter', 'stipendFilter', 'durationFilter'];
+    filters.forEach(id => {
+        document.getElementById(id)?.addEventListener('change', filterInternships);
+    });
+});
 
 function filterInternships() {
-    showNotification('Filters applied!', 'info');
+    const domain = document.getElementById('domainFilter').value;
+    const location = document.getElementById('locationFilter').value;
+    const stipend = document.getElementById('stipendFilter').value;
+    const duration = document.getElementById('durationFilter').value;
+
+    const cards = document.querySelectorAll('.internship-card');
+
+    cards.forEach(card => {
+        const matchDomain = !domain || card.dataset.domain === domain;
+        const matchLocation = !location || card.dataset.location === location;
+        const matchStipend = !stipend || card.dataset.stipend === stipend;
+        const matchDuration = !duration || card.dataset.duration === duration;
+
+        if (matchDomain && matchLocation && matchStipend && matchDuration) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
 }
+
+
+
 
 // Chatbot functionality
 function toggleChatbot() {
@@ -515,3 +544,4 @@ function sendEmailNotification(email, name, type) {
             showNotification('Registration successful, but we couldn\'t send a confirmation email. Please check your email later.', 'warning');
         });
 }
+

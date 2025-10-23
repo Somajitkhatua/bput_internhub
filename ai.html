@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Recommendations - Student Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6a5acd;
+            --secondary-color: #4b0082;
+            --accent-color: #9370db;
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8b8;
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-tertiary: #0f3460;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --card-shadow: rgba(0, 0, 0, 0.3);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --ai-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --ai-glow: 0 0 20px rgba(102, 126, 234, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Recommendations Header */
+        .recommendations-header {
+            background: var(--ai-gradient);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recommendations-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .ai-badge i {
+            color: #ffd700;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        .recommendations-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .recommendations-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        /* Main Container */
+        .recommendations-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* AI Insights Card */
+        .ai-insights {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-insights::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--ai-gradient);
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            background: var(--bg-tertiary);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--ai-glow);
+            border-color: var(--accent-color);
+        }
+
+        .insight-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .insight-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .insight-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Section Styles */
+        .recommendations-section {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: var(--accent-color);
+        }
+
+        .ai-score {
+            background: var(--ai-gradient);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Skills Recommendations */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-recommendation {
+            background: var(--bg-tertiary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-recommendation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--ai-gradient);
+        }
+
+        .skill-recommendation:hover {
+            transform: translateX(5px);
+            box-shadow: var(--ai-glow);
+        }
+
+        .skill-icon-large {
+            width: 60px;
+            height: 60px;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+
+        .skill-info {
+            flex: 1;
+        }
+
+        .skill-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .skill-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-match {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .match-bar {
+            flex: 1;
+            height: 6px;
+            background: var(--bg-primary);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .match-fill {
+            height: 100%;
+            background: var(--ai-gradient);
+            border-radius: 3px;
+            transition: width 1s ease-out;
+        }
+
+        .match-percentage {
+            font-weight: bold;
+            color: var(--accent-color);
+            min-width: 45px;
+            text-align: right;
+        }
+
+        .add-skill-btn {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+        }
+
+        .add-skill-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .add-skill-btn.added {
+            background: var(--text-secondary);
+            cursor: default;
+        }
+
+        /* Internship Recommendations */
+        .internships-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .internship-card {
+            background: var(--bg-tertiary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .internship-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--ai-glow);
+        }
+
+        .internship-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            background: var(--ai-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .internship-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .company-name {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+        }
+
+        .internship-details {
+            margin-bottom: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-item i {
+            color: var(--accent-color);
+            width: 20px;
+        }
+
+        .ai-reason {
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 3px solid var(--accent-color);
+            padding: 0.8rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+
+        .ai-reason-title {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ai-reason-text {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .match-score {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--ai-gradient);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .internship-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .apply-btn, .view-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .apply-btn {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .apply-btn:hover {
+            background: #45a049;
+            transform: scale(1.02);
+        }
+
+        .apply-btn.applied {
+            background: var(--text-secondary);
+            cursor: default;
+        }
+
+        .view-btn {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .view-btn:hover {
+            background: var(--border-color);
+        }
+
+        /* Loading Animation */
+        .loading-container {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .ai-loading {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .ai-loading div {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            animation: ai-loading 1.2s linear infinite;
+        }
+
+        .ai-loading div:nth-child(1) {
+            top: 8px;
+            left: 8px;
+            animation-delay: 0s;
+        }
+
+        .ai-loading div:nth-child(2) {
+            top: 8px;
+            left: 32px;
+            animation-delay: -0.4s;
+        }
+
+        .ai-loading div:nth-child(3) {
+            top: 8px;
+            left: 56px;
+            animation-delay: -0.8s;
+        }
+
+        .ai-loading div:nth-child(4) {
+            top: 32px;
+            left: 8px;
+            animation-delay: -0.4s;
+        }
+
+        .ai-loading div:nth-child(5) {
+            top: 32px;
+            left: 32px;
+            animation-delay: -0.8s;
+        }
+
+        .ai-loading div:nth-child(6) {
+            top: 32px;
+            left: 56px;
+            animation-delay: -1.2s;
+        }
+
+        .ai-loading div:nth-child(7) {
+            top: 56px;
+            left: 8px;
+            animation-delay: -0.8s;
+        }
+
+        .ai-loading div:nth-child(8) {
+            top: 56px;
+            left: 32px;
+            animation-delay: -1.2s;
+        }
+
+        .ai-loading div:nth-child(9) {
+            top: 56px;
+            left: 56px;
+            animation-delay: -1.6s;
+        }
+
+        @keyframes ai-loading {
+            0%, 20%, 80%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+        }
+
+        .loading-text {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: var(--bg-secondary);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px var(--card-shadow);
+            border: 1px solid var(--border-color);
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--danger-color);
+        }
+
+        .modal-body {
+            color: var(--text-primary);
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .detail-section p, .detail-section li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-section ul {
+            padding-left: 1.5rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .modal-btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .modal-btn-primary {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: #45a049;
+        }
+
+        .modal-btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        /* Filter Controls */
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .filter-btn.active {
+            background: var(--ai-gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .recommendations-title {
+                font-size: 1.8rem;
+            }
+
+            .back-button {
+                position: static;
+                margin-bottom: 1rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .skills-grid,
+            .internships-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Recommendations Header -->
+    <header class="recommendations-header">
+        <button class="back-button" onclick="goBack()">
+            <i class="fas fa-arrow-left"></i>
+            Back to Profile
+        </button>
+        <div class="ai-badge">
+            <i class="fas fa-robot"></i>
+            <span>AI-Powered Recommendations</span>
+        </div>
+        <h1 class="recommendations-title">Personalized Career Path</h1>
+        <p class="recommendations-subtitle">Curated recommendations based on your academic performance, skills, and career goals</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="recommendations-container">
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-container">
+            <div class="ai-loading">
+                <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+            </div>
+            <p class="loading-text">AI is analyzing your profile and generating personalized recommendations...</p>
+        </div>
+
+        <!-- AI Insights -->
+        <section id="aiInsights" class="ai-insights" style="display: none;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">
+                <i class="fas fa-brain" style="color: var(--accent-color);"></i>
+                AI Career Insights
+            </h2>
+            <div class="insights-grid">
+                <div class="insight-card" onclick="showInsightDetail('readiness')">
+                    <div class="insight-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="insight-value">92%</div>
+                    <div class="insight-label">Career Readiness Score</div>
+                </div>
+                <div class="insight-card" onclick="showInsightDetail('matches')">
+                    <div class="insight-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="insight-value">5</div>
+                    <div class="insight-label">Top Career Matches</div>
+                </div>
+                <div class="insight-card" onclick="showInsightDetail('success')">
+                    <div class="insight-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="insight-value">3.85</div>
+                    <div class="insight-label">Predicted Success Rate</div>
+                </div>
+                <div class="insight-card" onclick="showInsightDetail('timeline')">
+                    <div class="insight-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="insight-value">6 months</div>
+                    <div class="insight-label">To Career Readiness</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Recommendations -->
+        <section id="skillsSection" class="recommendations-section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-lightbulb"></i>
+                    Recommended Skills to Learn
+                </h2>
+                <span class="ai-score">AI Match: 95%</span>
+            </div>
+            
+            <div class="filter-controls">
+                <button class="filter-btn active" onclick="filterSkills('all')">All Skills</button>
+                <button class="filter-btn" onclick="filterSkills('technical')">Technical</button>
+                <button class="filter-btn" onclick="filterSkills('cloud')">Cloud</button>
+                <button class="filter-btn" onclick="filterSkills('mobile')">Mobile</button>
+            </div>
+            
+            <div class="skills-grid" id="skillsGrid">
+                <!-- Skills will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Internship Recommendations -->
+        <section id="internshipsSection" class="recommendations-section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-briefcase"></i>
+                    Recommended Internships
+                </h2>
+                <span class="ai-score">AI Match: 88%</span>
+            </div>
+            
+            <div class="filter-controls">
+                <button class="filter-btn active" onclick="filterInternships('all')">All Internships</button>
+                <button class="filter-btn" onclick="filterInternships('remote')">Remote</button>
+                <button class="filter-btn" onclick="filterInternships('onsite')">On-site</button>
+                <button class="filter-btn" onclick="filterInternships('high-match')">High Match</button>
+            </div>
+            
+            <div class="internships-grid" id="internshipsGrid">
+                <!-- Internships will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Internship Details Modal -->
+    <div id="internshipModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalInternshipTitle">Internship Details</h2>
+                <button class="close-modal" onclick="closeModal('internshipModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalInternshipBody">
+                <!-- Content will be dynamically inserted -->
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal('internshipModal')">Close</button>
+                <button class="modal-btn modal-btn-primary" id="modalApplyBtn">Apply Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Insight Details Modal -->
+    <div id="insightModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalInsightTitle">Insight Details</h2>
+                <button class="close-modal" onclick="closeModal('insightModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalInsightBody">
+                <!-- Content will be dynamically inserted -->
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-primary" onclick="closeModal('insightModal')">Got it</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data storage
+        let addedSkills = new Set();
+        let appliedInternships = new Set();
+        let currentSkillFilter = 'all';
+        let currentInternshipFilter = 'all';
+
+        // Skills data
+        const skillsData = [
+            {
+                name: 'Docker & Kubernetes',
+                icon: 'fab fa-docker',
+                description: 'Container orchestration for modern applications',
+                match: 95,
+                reason: 'High demand in cloud computing roles',
+                category: 'cloud',
+                details: 'Learn containerization, orchestration, and microservices architecture. Essential for DevOps and cloud engineering roles.'
+            },
+            {
+                name: 'TensorFlow Advanced',
+                icon: 'fas fa-brain',
+                description: 'Deep learning and neural networks',
+                match: 92,
+                reason: 'Aligns with your ML interests',
+                category: 'technical',
+                details: 'Master advanced deep learning concepts, CNNs, RNNs, and transformer architectures for cutting-edge AI applications.'
+            },
+            {
+                name: 'AWS Cloud Architecture',
+                icon: 'fab fa-aws',
+                description: 'Cloud infrastructure and services',
+                match: 88,
+                reason: 'Essential for modern software development',
+                category: 'cloud',
+                details: 'Design and deploy scalable cloud solutions using AWS services including EC2, S3, Lambda, and more.'
+            },
+            {
+                name: 'GraphQL API Design',
+                icon: 'fas fa-project-diagram',
+                description: 'Modern API development',
+                match: 85,
+                reason: 'Growing industry standard',
+                category: 'technical',
+                details: 'Build flexible and efficient APIs using GraphQL, Apollo Server, and modern frontend integrations.'
+            },
+            {
+                name: 'React Native',
+                icon: 'fab fa-react',
+                description: 'Cross-platform mobile development',
+                match: 82,
+                reason: 'Expands your mobile development skills',
+                category: 'mobile',
+                details: 'Create native mobile apps for iOS and Android using React Native and JavaScript/TypeScript.'
+            },
+            {
+                name: 'DevOps Practices',
+                icon: 'fas fa-cogs',
+                description: 'CI/CD and automation',
+                match: 78,
+                reason: 'Critical for software engineering roles',
+                category: 'technical',
+                details: 'Implement continuous integration, deployment pipelines, and infrastructure as code using modern DevOps tools.'
+            }
+        ];
+
+        // Internships data
+        const internshipsData = [
+            {
+                company: 'TechCorp',
+                initials: 'TC',
+                title: 'AI/ML Engineering Intern',
+                location: 'San Francisco, CA',
+                duration: '6 months',
+                stipend: '$35/hr',
+                match: 94,
+                type: 'onsite',
+                reason: 'Perfect match for your ML skills and academic background. Company culture aligns with your learning preferences.',
+                requirements: ['Currently pursuing Computer Science degree', 'Experience with Python and ML frameworks', 'Strong problem-solving skills', 'Team collaboration experience'],
+                responsibilities: ['Develop ML models for production', 'Collaborate with data science team', 'Optimize algorithms for performance', 'Participate in code reviews'],
+                benefits: ['Mentorship program', 'Flexible work hours', 'Professional development budget', 'Potential for full-time offer']
+            },
+            {
+                company: 'DataSoft Solutions',
+                initials: 'DS',
+                title: 'Data Science Intern',
+                location: 'Remote',
+                duration: '4 months',
+                stipend: '$30/hr',
+                match: 91,
+                type: 'remote',
+                reason: 'Leverages your Python and data analysis skills. Remote option matches your flexibility needs.',
+                requirements: ['Statistics or Computer Science background', 'Proficiency in Python', 'Experience with data visualization', 'SQL knowledge'],
+                responsibilities: ['Analyze large datasets', 'Create data visualizations', 'Build predictive models', 'Present findings to stakeholders'],
+                benefits: ['Fully remote work', 'Home office stipend', 'Weekly tech talks', 'Networking opportunities']
+            },
+            {
+                company: 'CloudFirst Technologies',
+                initials: 'CF',
+                title: 'Cloud Engineering Intern',
+                location: 'Seattle, WA',
+                duration: '3 months',
+                stipend: '$32/hr',
+                match: 88,
+                type: 'onsite',
+                reason: 'Great opportunity to learn cloud technologies while building on your existing programming foundation.',
+                requirements: ['Interest in cloud computing', 'Basic programming knowledge', 'Problem-solving mindset', 'Willingness to learn'],
+                responsibilities: ['Deploy applications to cloud', 'Monitor cloud infrastructure', 'Automate deployment processes', 'Support development teams'],
+                benefits: ['AWS certification support', 'Cloud training programs', 'Tech conferences attendance', 'Relocation assistance']
+            },
+            {
+                company: 'InnovateAI Labs',
+                initials: 'IA',
+                title: 'Research Intern - Computer Vision',
+                location: 'Boston, MA',
+                duration: '6 months',
+                stipend: '$28/hr',
+                match: 86,
+                type: 'onsite',
+                reason: 'Research-focused role that complements your academic interests in AI and machine learning.',
+                requirements: ['Background in computer vision', 'Python proficiency', 'Mathematics foundation', 'Research experience'],
+                responsibilities: ['Conduct computer vision research', 'Implement novel algorithms', 'Write research papers', 'Collaborate with PhD researchers'],
+                benefits: ['Publication opportunities', 'Conference presentations', 'Academic networking', 'PhD pathway guidance']
+            },
+            {
+                company: 'DevOps Pro',
+                initials: 'DP',
+                title: 'DevOps Engineering Intern',
+                location: 'Austin, TX',
+                duration: '4 months',
+                stipend: '$29/hr',
+                match: 84,
+                type: 'onsite',
+                reason: 'Expands your skill set into infrastructure and automation, highly valuable for career growth.',
+                requirements: ['Linux/Unix knowledge', 'Scripting skills', 'Understanding of CI/CD', 'System administration interest'],
+                responsibilities: ['Manage CI/CD pipelines', 'Automate infrastructure', 'Monitor system performance', 'Support deployment processes'],
+                benefits: ['Certification programs', 'Hands-on experience', 'Mentorship from senior engineers', 'Modern tool exposure']
+            },
+            {
+                company: 'MobileFirst',
+                initials: 'MF',
+                title: 'Mobile Development Intern',
+                location: 'New York, NY',
+                duration: '3 months',
+                stipend: '$27/hr',
+                match: 82,
+                type: 'onsite',
+                reason: 'Builds on your React skills while introducing mobile development expertise.',
+                requirements: ['JavaScript/TypeScript knowledge', 'React experience', 'Mobile app interest', 'UI/UX understanding'],
+                responsibilities: ['Develop mobile applications', 'Implement user interfaces', 'Test app functionality', 'Collaborate with designers'],
+                benefits: ['App store publishing', 'User analytics access', 'Design system exposure', 'Cross-functional teamwork']
+            }
+        ];
+
+        // Simulate AI loading and analysis
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('aiInsights').style.display = 'block';
+                document.getElementById('skillsSection').style.display = 'block';
+                document.getElementById('internshipsSection').style.display = 'block';
+                
+                loadSkillRecommendations();
+                loadInternshipRecommendations();
+                animateInsights();
+            }, 3000);
+        });
+
+        // Load skill recommendations
+        function loadSkillRecommendations() {
+            const skillsGrid = document.getElementById('skillsGrid');
+            skillsGrid.innerHTML = '';
+            
+            const filteredSkills = currentSkillFilter === 'all' 
+                ? skillsData 
+                : skillsData.filter(skill => skill.category === currentSkillFilter);
+            
+            filteredSkills.forEach((skill, index) => {
+                setTimeout(() => {
+                    const skillCard = document.createElement('div');
+                    skillCard.className = 'skill-recommendation';
+                    skillCard.style.opacity = '0';
+                    skillCard.innerHTML = `
+                        <div class="skill-icon-large">
+                            <i class="${skill.icon}"></i>
+                        </div>
+                        <div class="skill-info">
+                            <div class="skill-name">${skill.name}</div>
+                            <div class="skill-description">${skill.description}</div>
+                            <div class="skill-match">
+                                <div class="match-bar">
+                                    <div class="match-fill" style="width: 0%"></div>
+                                </div>
+                                <span class="match-percentage">${skill.match}%</span>
+                            </div>
+                            <button class="add-skill-btn ${addedSkills.has(skill.name) ? 'added' : ''}" 
+                                    onclick="addSkill('${skill.name}', this)"
+                                    id="skill-btn-${skill.name.replace(/\s+/g, '-')}">
+                                ${addedSkills.has(skill.name) ? '<i class="fas fa-check"></i> Added' : '<i class="fas fa-plus"></i> Add to Profile'}
+                            </button>
+                        </div>
+                    `;
+                    
+                    skillsGrid.appendChild(skillCard);
+                    
+                    // Animate appearance
+                    setTimeout(() => {
+                        skillCard.style.transition = 'opacity 0.5s ease';
+                        skillCard.style.opacity = '1';
+                        
+                        // Animate progress bar
+                        setTimeout(() => {
+                            skillCard.querySelector('.match-fill').style.width = `${skill.match}%`;
+                        }, 100);
+                    }, 50);
+                }, index * 200);
+            });
+        }
+
+        // Load internship recommendations
+        function loadInternshipRecommendations() {
+            const internshipsGrid = document.getElementById('internshipsGrid');
+            internshipsGrid.innerHTML = '';
+            
+            let filteredInternships = internshipsData;
+            
+            if (currentInternshipFilter === 'remote') {
+                filteredInternships = internshipsData.filter(internship => internship.type === 'remote');
+            } else if (currentInternshipFilter === 'onsite') {
+                filteredInternships = internshipsData.filter(internship => internship.type === 'onsite');
+            } else if (currentInternshipFilter === 'high-match') {
+                filteredInternships = internshipsData.filter(internship => internship.match >= 90);
+            }
+            
+            filteredInternships.forEach((internship, index) => {
+                setTimeout(() => {
+                    const internshipCard = document.createElement('div');
+                    internshipCard.className = 'internship-card';
+                    internshipCard.style.opacity = '0';
+                    internshipCard.innerHTML = `
+                        <div class="match-score">${internship.match}% Match</div>
+                        <div class="internship-header">
+                            <div class="company-logo">${internship.initials}</div>
+                            <div>
+                                <div class="internship-title">${internship.title}</div>
+                                <div class="company-name">${internship.company}</div>
+                            </div>
+                        </div>
+                        <div class="internship-details">
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${internship.location}</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-clock"></i>
+                                <span>${internship.duration}</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>${internship.stipend}</span>
+                            </div>
+                        </div>
+                        <div class="ai-reason">
+                            <div class="ai-reason-title">
+                                <i class="fas fa-robot"></i>
+                                <span>Why this matches you</span>
+                            </div>
+                            <div class="ai-reason-text">${internship.reason}</div>
+                        </div>
+                        <div class="internship-actions">
+                            <button class="apply-btn ${appliedInternships.has(internship.company) ? 'applied' : ''}" 
+                                    onclick="applyInternship('${internship.company}', this)"
+                                    id="apply-btn-${internship.company.replace(/\s+/g, '-')}">
+                                ${appliedInternships.has(internship.company) ? '<i class="fas fa-check"></i> Applied' : '<i class="fas fa-paper-plane"></i> Apply Now'}
+                            </button>
+                            <button class="view-btn" onclick="viewDetails('${internship.company}')">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                        </div>
+                    `;
+                    
+                    internshipsGrid.appendChild(internshipCard);
+                    
+                    // Animate appearance
+                    setTimeout(() => {
+                        internshipCard.style.transition = 'opacity 0.5s ease';
+                        internshipCard.style.opacity = '1';
+                    }, 50);
+                }, index * 200);
+            });
+        }
+
+        // Filter skills
+        function filterSkills(category) {
+            currentSkillFilter = category;
+            
+            // Update active button
+            document.querySelectorAll('.skills-section .filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            loadSkillRecommendations();
+        }
+
+        // Filter internships
+        function filterInternships(type) {
+            currentInternshipFilter = type;
+            
+            // Update active button
+            document.querySelectorAll('.internships-section .filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            loadInternshipRecommendations();
+        }
+
+        // Add skill to profile
+        function addSkill(skillName, button) {
+            if (addedSkills.has(skillName)) {
+                showNotification(`${skillName} is already in your profile`);
+                return;
+            }
+            
+            addedSkills.add(skillName);
+            button.classList.add('added');
+            button.innerHTML = '<i class="fas fa-check"></i> Added';
+            
+            // Store in localStorage
+            const skills = JSON.parse(localStorage.getItem('recommendedSkills') || '[]');
+            if (!skills.includes(skillName)) {
+                skills.push(skillName);
+                localStorage.setItem('recommendedSkills', JSON.stringify(skills));
+            }
+            
+            showNotification(`${skillName} added to your profile!`);
+            
+            // Update main profile if exists
+            if (window.opener && !window.opener.closed) {
+                window.opener.postMessage({ type: 'skillAdded', skill: skillName }, '*');
+            }
+        }
+
+        // Apply for internship
+        function applyInternship(company, button) {
+            if (appliedInternships.has(company)) {
+                showNotification(`You've already applied to ${company}`);
+                return;
+            }
+            
+            appliedInternships.add(company);
+            button.classList.add('applied');
+            button.innerHTML = '<i class="fas fa-check"></i> Applied';
+            
+            // Store application
+            const applications = JSON.parse(localStorage.getItem('internshipApplications') || '[]');
+            applications.push({
+                company: company,
+                date: new Date().toISOString(),
+                status: 'pending'
+            });
+            localStorage.setItem('internshipApplications', JSON.stringify(applications));
+            
+            showNotification(`Application submitted to ${company}! You'll receive updates via email.`);
+            
+            // Simulate email notification
+            setTimeout(() => {
+                showNotification(`📧 Confirmation email sent for ${company} application`);
+            }, 2000);
+        }
+
+        // View internship details
+        function viewDetails(company) {
+            const internship = internshipsData.find(i => i.company === company);
+            if (!internship) return;
+            
+            document.getElementById('modalInternshipTitle').textContent = `${internship.title} - ${internship.company}`;
+            
+            const modalBody = document.getElementById('modalInternshipBody');
+            modalBody.innerHTML = `
+                <div class="detail-section">
+                    <h3><i class="fas fa-building"></i> Company Overview</h3>
+                    <p>${internship.company} is a leading technology company focused on innovation and excellence. Join our team to work on cutting-edge projects that make a real impact.</p>
+                </div>
+                
+                <div class="detail-section">
+                    <h3><i class="fas fa-tasks"></i> Responsibilities</h3>
+                    <ul>
+                        ${internship.responsibilities.map(r => `<li>${r}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="detail-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Requirements</h3>
+                    <ul>
+                        ${internship.requirements.map(r => `<li>${r}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="detail-section">
+                    <h3><i class="fas fa-gift"></i> Benefits & Perks</h3>
+                    <ul>
+                        ${internship.benefits.map(b => `<li>${b}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="detail-section">
+                    <h3><i class="fas fa-robot"></i> AI Match Analysis</h3>
+                    <p><strong>Match Score: ${internship.match}%</strong></p>
+                    <p>${internship.reason}</p>
+                </div>
+            `;
+            
+            document.getElementById('modalApplyBtn').onclick = () => {
+                closeModal('internshipModal');
+                const button = document.getElementById(`apply-btn-${company.replace(/\s+/g, '-')}`);
+                if (button && !appliedInternships.has(company)) {
+                    applyInternship(company, button);
+                }
+            };
+            
+            openModal('internshipModal');
+        }
+
+        // Show insight details
+        function showInsightDetail(type) {
+            const insights = {
+                readiness: {
+                    title: 'Career Readiness Score',
+                    content: `
+                        <p>Your career readiness score of 92% indicates you're well-prepared for entering the tech industry. This score is calculated based on:</p>
+                        <ul>
+                            <li>Academic performance (GPA: 3.85)</li>
+                            <li>Technical skills proficiency</li>
+                            <li>Project portfolio strength</li>
+                            <li>Industry-relevant experience</li>
+                        </ul>
+                        <p><strong>Recommendations:</strong> Focus on gaining internship experience and expanding your professional network.</p>
+                    `
+                },
+                matches: {
+                    title: 'Top Career Matches',
+                    content: `
+                        <p>Based on your profile, here are your top 5 career matches:</p>
+                        <ol>
+                            <li><strong>Machine Learning Engineer</strong> - 95% match</li>
+                            <li><strong>Data Scientist</strong> - 92% match</li>
+                            <li><strong>Cloud Engineer</strong> - 88% match</li>
+                            <li><strong>Full-Stack Developer</strong> - 85% match</li>
+                            <li><strong>DevOps Engineer</strong> - 82% match</li>
+                        </ol>
+                        <p>These matches align with your skills, interests, and market demand.</p>
+                    `
+                },
+                success: {
+                    title: 'Predicted Success Rate',
+                    content: `
+                        <p>Your predicted success rate of 3.85/4.0 is based on:</p>
+                        <ul>
+                            <li>Historical data from similar profiles</li>
+                            <li>Current industry trends</li>
+                            <li>Your academic achievements</li>
+                            <li>Skill development trajectory</li>
+                        </ul>
+                        <p>This indicates high potential for success in your chosen career path. Continue building on your strengths!</p>
+                    `
+                },
+                timeline: {
+                    title: 'Timeline to Career Readiness',
+                    content: `
+                        <p>Estimated 6 months to reach full career readiness. This timeline includes:</p>
+                        <ul>
+                            <li>Completing recommended skill courses (2-3 months)</li>
+                            <li>Gaining internship experience (3-4 months)</li>
+                            <li>Building professional network (ongoing)</li>
+                            <li>Portfolio enhancement (1-2 months)</li>
+                        </ul>
+                        <p>Stay focused on your goals and you'll be career-ready in no time!</p>
+                    `
+                }
+            };
+            
+            const insight = insights[type];
+            document.getElementById('modalInsightTitle').textContent = insight.title;
+            document.getElementById('modalInsightBody').innerHTML = insight.content;
+            
+            openModal('insightModal');
+        }
+
+        // Animate insights
+        function animateInsights() {
+            const insightValues = document.querySelectorAll('.insight-value');
+            insightValues.forEach((value, index) => {
+                setTimeout(() => {
+                    value.style.animation = 'pulse 1s ease-out';
+                }, index * 200);
+            });
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Go back to profile
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.close();
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                animation: slideIn 0.3s ease-out;
+                max-width: 300px;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Add slide animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Listen for messages from parent window
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'updateProfile') {
+                // Refresh data if profile is updated
+                console.log('Profile updated, refreshing recommendations...');
+            }
+        });
+    </script>
+</body>
+</html>
